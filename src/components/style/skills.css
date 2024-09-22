@@ -1,0 +1,12 @@
+/* Add to your globals.css file */
+
+.skill-icon {
+    max-width: 100px;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    filter: grayscale(100%);
+}
+
+.skill-icon:hover {
+    filter: none;
+    transform: scale(1.1);
+}
