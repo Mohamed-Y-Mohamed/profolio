@@ -1,12 +1,129 @@
-/* Add to your globals.css file */
-
-.skill-icon {
-    max-width: 100px;
-    transition: transform 0.3s ease, filter 0.3s ease;
-    filter: grayscale(100%);
+/* Glow container with customizable spread */
+:root {
+    --foreground-rgb: rgb(211, 216, 232);
 }
 
-.skill-icon:hover {
-    filter: none;
-    transform: scale(1.1);
+@media (prefers-color-scheme: dark) {
+    :root {
+        --foreground-rgb: 255, 255, 255;
+    }
+}
+
+body {
+    color: rgb(var(--foreground-rgb));
+    background-color: #0A1F44;
+}
+
+#sticky-card-1 {
+    --index: 1;
+}
+
+#sticky-card-2 {
+    --index: 2;
+}
+
+#sticky-card-3 {
+    --index: 3;
+}
+
+#sticky-card-4 {
+    --index: 4;
+}
+
+.sticky-card {
+    top: calc(var(--index) * 3rem);
+}
+
+.glow-container {
+    --spread: 60px;
+    position: relative;
+    overflow: hidden;
+    /* Prevent any overflow from causing scrollbars */
+}
+
+/* Glow card container */
+.glow-card {
+    position: relative;
+    transition: transform 0.3s ease-in-out;
+}
+
+.glow-card:hover,
+.glow-card:focus-visible {
+    z-index: 2;
+    transform: scale(1.05);
+}
+
+/* Glow effect */
+.glows {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    filter: blur(10px);
+}
+
+/* Adding glow effect using before and after pseudo-elements */
+.glows::before,
+.glows::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    /* Changed from -8px to 0 to avoid overflow */
+    left: 0;
+    /* Changed from -8px to 0 */
+    right: 0;
+    /* Changed from -8px to 0 */
+    bottom: 0;
+    /* Changed from -8px to 0 */
+    border-radius: 12px;
+    transition: opacity 1s;
+    opacity: 0.15;
+}
+
+/* Glow animation on hover */
+.glow-card:hover .glows::before,
+.glow-card:hover .glows::after {
+    opacity: 0.6;
+}
+
+/* Main glow effect using gradient */
+.glows::before {
+    background: conic-gradient(from 180deg at 50% 70%,
+            #f626af,
+            #8228ec,
+            #f626af,
+            #0025ba,
+            #f626af,
+            #fafafa);
+    background-attachment: fixed;
+    border-radius: 12px;
+}
+
+.glows::after {
+    background: conic-gradient(from 180deg at 50% 70%,
+            #f626af,
+            #8228ec,
+            #f626af,
+            #0025ba,
+            #f626af,
+            #fafafa);
+    border-radius: 12px;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+/* Glow hover effect for the card border */
+.glow-card:hover::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    transition: opacity 1s;
 }

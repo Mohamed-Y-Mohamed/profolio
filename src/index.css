@@ -175,6 +175,48 @@
   }
 }
 
+/*cursar section*/
 /*
 -- End BackGround Animation 
 */
+/* Add this to your main CSS file or inlined as a style */
+/* Mobile view adjustments for nav when burger menu is open */
+@media (max-width: 767px) {
+  nav {
+    background-color: #0A1F44 !important;
+    /* Background color for mobile nav */
+    position: relative;
+    /* Ensure nav doesn't overlap with other elements */
+    z-index: 1000;
+    /* Ensure nav stays on top */
+  }
+
+  /* Ensure the mobile menu takes space when open */
+  #navbar-default {
+    position: relative;
+    display: block;
+    /* Ensure it expands below the nav */
+    background-color: #0A1F44;
+    /* Background color for the menu */
+    width: 100%;
+    padding: 20px 0;
+    margin-top: 10px;
+    /* Spacing between the nav and menu items */
+  }
+
+  /* Adjust ul to not overlap */
+  nav ul {
+    display: block;
+    /* Ensure the list is displayed correctly */
+    padding: 10px;
+    background-color: #0A1F44;
+    /* Same background color */
+    border-radius: 10px;
+  }
+
+  /* Ensure other elements move down when the menu is open */
+  .content-below-nav {
+    margin-top: 60px;
+    /* Adjust this value as needed */
+  }
+}

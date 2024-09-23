@@ -6,7 +6,7 @@ import image3 from "../assets/image/image3.jpg";
 const About = () => {
     return (
         <>
-            <section className="overflow-hidden pt-20 pb-12 lg:pt-[120px] lg:pb-[90px] bg-white dark:bg-dark">
+            <section className="overflow-hidden pt-20 pb-12 lg:pt-[120px] lg:pb-[90px] bg-[#0d1224] text-[#E8E8E8]">
                 <div className="container mx-auto">
                     <div className="flex flex-wrap items-center justify-between -mx-4">
                         <div className="w-full px-4 lg:w-6/12">
@@ -15,14 +15,14 @@ const About = () => {
                                     <div className="py-3 sm:py-4">
                                         <img
                                             src={image1}
-                                            alt=""
+                                            alt="image1"
                                             className="w-full rounded-2xl"
                                         />
                                     </div>
                                     <div className="py-3 sm:py-4">
                                         <img
                                             src={image2}
-                                            alt=""
+                                            alt="image2"
                                             className="w-full rounded-2xl"
                                         />
                                     </div>
@@ -31,33 +31,47 @@ const About = () => {
                                     <div className="relative z-10 my-4">
                                         <img
                                             src={image3}
-                                            alt=""
+                                            alt="image3"
                                             className="w-full rounded-2xl"
                                         />
-                                        <span className="absolute -right-7 -bottom-7 z-[-1]">
-                                            {/* SVG remains unchanged */}
-                                        </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div className="w-full px-4 lg:w-1/2 xl:w-5/12">
+                            {/* Main Header, similar to Skills */}
+                            <div className="flex justify-center -translate-y-[1px] mb-5">
+                                <div className="w-3/4">
+                                    <div className="h-[1px] bg-gradient-to-r from-transparent via-[#3BC4C4] to-transparent w-full" /> {/* Accent Line */}
+                                </div>
+                            </div>
                             <div className="mt-10 lg:mt-0">
-                                <span className="block mb-4 text-6xl font-semibold text-primary">
-                                    About Me
-                                </span>
-                                <h2 className="mb-5 text-4xl font-bold text-dark dark:text-white sm:text-[48px]/[56px]">
+                                {/* Accent line similar to Skills */}
+                                <div className="flex justify-center my-5 lg:py-8">
+                                    <div className="flex items-center">
+                                        <span className="w-24 h-[2px] bg-[#1a1443]"></span>
+                                        <span className="bg-[#0A1F44] w-fit text-white p-2 px-5 text-6xl rounded-md">
+                                            About Me
+                                        </span>
+                                        <span className="w-24 h-[2px] bg-[#1a1443]"></span>
+                                    </div>
+                                </div>
+
+
+
+                                <h2 className="mb-5 text-4xl font-bold text-[#E8E8E8] sm:text-[48px]/[56px]">
                                     Technology-driven. Solution-focused.
                                 </h2>
-                                <p className="mb-5 text-xl text-body-color dark:text-dark-6 leading-relaxed">
+
+                                <p className="mb-5 text-xl leading-relaxed text-[#BFC5C5]">
                                     I am Mohamed Yusuf Mohamed, a Full Stack Developer with a strong
                                     foundation in creating solutions that aim to simplify processes
                                     and enhance user experience. With a background rooted in diverse
                                     environments, I approach challenges with a global perspective,
                                     always driven by the desire to innovate and optimise workflows.
                                 </p>
-                                <p className="mb-8 text-xl text-body-color dark:text-dark-6 leading-relaxed">
+                                <p className="mb-8 text-xl leading-relaxed text-[#BFC5C5]">
                                     My expertise extends across front-end and back-end development,
                                     allowing me to craft seamless and efficient digital solutions.
                                     I am passionate about transforming complex problems into clear,
@@ -65,8 +79,8 @@ const About = () => {
                                     a tangible impact.
                                 </p>
                                 <a
-                                    href="javascript:void(0)"
-                                    className="inline-flex items-center justify-center py-3 text-xl font-medium text-center text-white border border-transparent rounded-full px-7 bg-[#3BC4C4] hover:bg-opacity-90"
+                                    href="#"
+                                    className="inline-flex items-center justify-center py-3 text-xl font-medium text-center text-[#E8E8E8] border border-transparent rounded-full px-7 bg-[#3BC4C4] hover:bg-opacity-90"
                                 >
                                     Let's Connect
                                 </a>
