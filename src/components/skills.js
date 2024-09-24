@@ -10,13 +10,13 @@ const skillsImage = (skill) => {
     const skillID = skill.toLowerCase().replace(" ", "").replace(".", "");
 
     const skillIconMapping = {
-        angular: <FaAngular size={35} color="#3BC4C4" />, // Cyan or Teal
-        javascript: <FaJs size={35} color="#f7df1e" />,
-        react: <FaReact size={35} color="#61dafb" />,
-        vue: <FaVuejs size={35} color="#42b883" />,
-        python: <FaPython size={35} color="#3BC4C4" />,
-        docker: <FaDocker size={35} color="#3BC4C4" />,
-        nodejs: <FaNodeJs size={35} color="#3c873a" />,
+        angular: <FaAngular size={45} color="#3BC4C4" />, // Cyan or Teal
+        javascript: <FaJs size={45} color="#f7df1e" />,
+        react: <FaReact size={45} color="#61dafb" />,
+        vue: <FaVuejs size={45} color="#42b883" />,
+        python: <FaPython size={45} color="#3BC4C4" />,
+        docker: <FaDocker size={45} color="#3BC4C4" />,
+        nodejs: <FaNodeJs size={45} color="#3c873a" />,
         // Add more mappings as needed...
     };
 

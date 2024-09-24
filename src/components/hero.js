@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link as ScrollLink } from 'react-scroll'; // For scrolling within the same page
-import { Link, useNavigate, useLocation } from 'react-router-dom'; // For navigating to different pages
+import { useNavigate, useLocation } from 'react-router-dom'; // For navigating to different pages
 import image1 from "../assets/image/hero.jpg";
-import image5 from "../assets/image/logo512.png";
 
 function Hero() {
     const [text, setText] = useState("");
@@ -104,118 +102,6 @@ function Hero() {
             </div>
             {/* End of Background Animation */}
 
-            {/* Navigation */}
-            <nav className="relative px-4 py-4 flex justify-between items-center bg-transparent z-10 w-full">
-                <a className="text-3xl font-bold leading-none" href="/">
-                    <img src={image5} alt="Logo" className="h-10" />
-                </a>
-                <div className="lg:hidden">
-                    <button onClick={toggleMenu} className="navbar-burger flex items-center text-blue-600 p-3">
-                        <svg className="block h-4 w-4 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <title>Mobile menu</title>
-                            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
-                        </svg>
-                    </button>
-                </div>
-
-                {/* Mobile Menu */}
-                {isMenuOpen && (
-                    <div className="navbar-menu relative z-50">
-                        <div className="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>
-                        <nav className="fixed top-0 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-white border-r overflow-y-auto">
-                            <div className="flex items-center mb-8">
-                                <a href="/" className="text-3xl font-bold leading-none">
-                                    <img src={image5} alt="Logo" className="h-12" />
-                                </a>
-                                <button onClick={toggleMenu} className="navbar-close ml-auto">
-                                    <svg className="h-6 w-6 text-gray-400 cursor-pointer hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
-                                    </svg>
-                                </button>
-                            </div>
-                            <ul>
-                                <li>
-                                    <Link
-                                        to="/"
-                                        className="block py-2 px-3 text-white hover:bg-gray-200 rounded cursor-pointer"
-                                    >
-                                        Home
-                                    </Link>
-                                </li>
-                                <li>
-                                    <button
-                                        onClick={() => handleNavigate('about')}
-                                        className="block py-2 px-3 text-white hover:bg-gray-200 rounded cursor-pointer"
-                                    >
-                                        About
-                                    </button>
-                                </li>
-                                <li>
-                                    <button
-                                        onClick={() => handleNavigate('skills')}
-                                        className="block py-2 px-3 text-white hover:bg-gray-200 rounded cursor-pointer"
-                                    >
-                                        Skills
-                                    </button>
-                                </li>
-                                <li>
-                                    <button
-                                        onClick={() => handleNavigate('experience')}
-                                        className="block py-2 px-3 text-white hover:bg-gray-200 rounded cursor-pointer"
-                                    >
-                                        Experience
-                                    </button>
-                                </li>
-                                <li>
-                                    <Link
-                                        to="/ContactUs"
-                                        className="block py-2 px-3 text-white hover:bg-gray-200 rounded cursor-pointer"
-                                    >
-                                        Contact Us
-                                    </Link>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                )}
-
-                <ul className="hidden lg:flex lg:mx-auto lg:flex lg:items-center lg:space-x-6">
-                    <li>
-                        <Link to="/" className="text-xl text-white hover:text-[#3BC4C4] cursor-pointer">
-                            Home
-                        </Link>
-                    </li>
-                    <li>
-                        <button
-                            onClick={() => handleNavigate('about')}
-                            className="text-xl text-white hover:text-[#3BC4C4] cursor-pointer"
-                        >
-                            About
-                        </button>
-                    </li>
-                    <li>
-                        <button
-                            onClick={() => handleNavigate('skills')}
-                            className="text-xl text-white hover:text-[#3BC4C4] cursor-pointer"
-                        >
-                            Skills
-                        </button>
-                    </li>
-                    <li>
-                        <button
-                            onClick={() => handleNavigate('experience')}
-                            className="text-xl text-white hover:text-[#3BC4C4] cursor-pointer"
-                        >
-                            Experience
-                        </button>
-                    </li>
-                    <li>
-                        <Link to="/ContactUs" className="text-xl text-white hover:text-[#3BC4C4] cursor-pointer">
-                            Contact Us
-                        </Link>
-                    </li>
-                </ul>
-            </nav>
 
             {/* Hero Section */}
             <div className="w-full sm:w-8/12 mb-10 relative z-10 mt-20 heroo">

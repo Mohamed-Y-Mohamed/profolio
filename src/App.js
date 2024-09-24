@@ -1,7 +1,5 @@
 import About from './components/about';
 import Timeline from './components/experience';
-import Hero from './components/hero';
-import Projects from './components/project';
 import Skills from './components/skills';
 import Education from './components/education';
 function App() {
