@@ -2,21 +2,27 @@
 
 import React, { useEffect } from "react";
 import Marquee from "react-fast-marquee";
-import { FaAngular, FaReact, FaPython, FaDocker, FaVuejs, FaJs, FaNodeJs } from "react-icons/fa"; // Icons for skills
+import { FcWorkflow } from "react-icons/fc";
+import { FaLayerGroup } from "react-icons/fa";
+import { SiKotlin, SiSwift, SiMongodb, SiFirebase, SiMysql } from "react-icons/si"; // More skill icons
 import './style/skills.css'; // Custom CSS for styles
+import { FaReact, FaPython, FaJs } from "react-icons/fa";
 
 // Mapping skill names to react-icons
 const skillsImage = (skill) => {
     const skillID = skill.toLowerCase().replace(" ", "").replace(".", "");
 
     const skillIconMapping = {
-        angular: <FaAngular size={45} color="#3BC4C4" />, // Cyan or Teal
         javascript: <FaJs size={45} color="#f7df1e" />,
         react: <FaReact size={45} color="#61dafb" />,
-        vue: <FaVuejs size={45} color="#42b883" />,
         python: <FaPython size={45} color="#3BC4C4" />,
-        docker: <FaDocker size={45} color="#3BC4C4" />,
-        nodejs: <FaNodeJs size={45} color="#3c873a" />,
+        Algorithm: <FcWorkflow size={45} color="#3BC4C4" />,
+        Oop: <FaLayerGroup size={45} color="#3BC4C4" />,
+        kotlin: <SiKotlin size={45} color="#7963fc" />,
+        swift: <SiSwift size={45} color="#f05138" />,
+        mongodb: <SiMongodb size={45} color="#4DB33D" />,
+        firebase: <SiFirebase size={45} color="#3c873a" />,
+        mysql: <SiMysql size={45} color="#00758F" />,
         // Add more mappings as needed...
     };
 
@@ -25,13 +31,16 @@ const skillsImage = (skill) => {
 
 // List of skills to display
 const skillsData = [
-    "Angular",
     "JavaScript",
     "React",
-    "Vue",
     "Python",
-    "Docker",
-    "NodeJS",
+    " Algorithms ",
+    "OOP",
+    "Kotlin",
+    "Swift",
+    "MongoDB",
+    "Firebase",
+    "MySQL",
     // Add more skills as needed
 ];
 
@@ -119,7 +128,7 @@ function Skills() {
             <div className="flex justify-center my-5 lg:py-8">
                 <div className="flex items-center">
                     <span className="w-24 h-[2px] bg-[#2B2E35]"></span> {/* Gunmetal Grey */}
-                    <span className="bg-[#2B2E35] w-fit text-[#E8E8E8] p-2 px-5 text-6xl rounded-md">
+                    <span className="bg-[#0d1224] w-fit text-[#E8E8E8] p-2 px-5 text-6xl rounded-md">
                         Skills
                     </span>
                     <span className="w-24 h-[2px] bg-[#2B2E35]"></span> {/* Gunmetal Grey */}

@@ -1,30 +1,32 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { BsPersonWorkspace } from "react-icons/bs";
 import { FaGraduationCap } from "react-icons/fa";
 import Lottie from "lottie-react";
 import lottieFile from "../assets/study.json"; // Adjust this path to your lottie file location
 
-// Education data
+// Education data from your CV
 const educations = [
     {
         id: 1,
         title: "Bachelor of Engineering in Software Engineering",
-        duration: "2020 - 2024",
+        duration: "2021 - 2024",
         institution: "University of Westminster, London",
+        grade: "", // You can fill this with the actual grade later
     },
     {
         id: 2,
-        title: "Higher Secondary Certificate",
-        duration: "2018 - 2020",
-        institution: "Noakhali Islamia Kamil Madrasah",
+        title: "Extended Diploma BTEC in ICT",
+        duration: "2020 - 2021",
+        institution: "West London College, London",
+        grade: "D*DD (Equavilant to 3 A* A Level)", // You can fill this with the actual grade later
     },
     {
         id: 3,
-        title: "Secondary School Certificate",
-        duration: "2008 - 2018",
-        institution: "Baitus Saif Islamia Madrasah",
+        title: "BTEC in ICT (Fundamentals of Computer Science), GCSE Mathmatic and English",
+        duration: "2018 - 2020",
+        institution: "West London College, London",
+        grade: "BTEC: D* (Equavilant to 1 A Level), Mathmatics: 6 ,English: 6", // You can fill this with the actual grade later
     },
 ];
 
@@ -94,7 +96,7 @@ const GlowCard = ({ children, identifier }) => {
     }, [identifier]);
 
     return (
-        <div className={`glow-container-${identifier} glow-container`}>
+        <div className={`glow-container-${identifier} glow-container w-full`}>
             <article className={`glow-card glow-card-${identifier} h-fit cursor-pointer border border-[#BFC5C5] transition-all duration-300 relative bg-[#0d1224] text-gray-200 rounded-xl hover:border-transparent w-full`}>
                 <div className="glows"></div>
                 {children}
@@ -127,7 +129,7 @@ function Education() {
             <div className="flex justify-center my-5 lg:py-8">
                 <div className="flex items-center">
                     <span className="w-24 h-[2px] bg-[#2B2E35]"></span>
-                    <span className="bg-[#2B2E35] w-fit text-[#E8E8E8] p-2 px-5 text-6xl rounded-md">
+                    <span className="bg-[#0A1F44] w-fit text-[#E8E8E8] p-2 px-5 text-6xl rounded-md">
                         Education
                     </span>
                     <span className="w-24 h-[2px] bg-[#2B2E35]"></span>
@@ -145,7 +147,7 @@ function Education() {
 
                     {/* Education Cards */}
                     <div>
-                        <div className="flex flex-col gap-6" style={{ maxWidth: "40vw" }}>
+                        <div className="flex flex-col gap-6 w-full lg:max-w-[40vw]">
                             {educations.map((education) => (
                                 <GlowCard key={education.id} identifier={`education-${education.id}`}>
                                     <div className="p-3 relative text-white">
@@ -159,6 +161,7 @@ function Education() {
                                             <div>
                                                 <p className="text-base sm:text-xl mb-2 font-medium uppercase">{education.title}</p>
                                                 <p className="text-sm sm:text-base">{education.institution}</p>
+                                                <p className="text-xs sm:text-sm text-[#BFC5C5]">Grade: {education.grade || "N/A"}</p> {/* Grade Field */}
                                             </div>
                                         </div>
                                     </div>

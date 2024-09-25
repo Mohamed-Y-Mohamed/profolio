@@ -53,7 +53,7 @@ const ContactUs = () => {
                 <div className="flex justify-center my-5 lg:py-8">
                     <div className="flex items-center">
                         <span className="w-24 h-[2px] bg-[#2B2E35]"></span>
-                        <span className="bg-[#2B2E35] w-fit text-[#E8E8E8] p-2 px-5 text-6xl rounded-md">
+                        <span className="bg-[#0A1F44] w-fit text-[#E8E8E8] p-2 px-5 text-6xl rounded-md">
                             Contact Us
                         </span>
                         <span className="w-24 h-[2px] bg-[#2B2E35]"></span>

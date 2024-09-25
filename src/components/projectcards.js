@@ -9,8 +9,7 @@ function ProjectSection() {
         {
             date: 'Dec 22, 2023',
             title: 'ArtVisio Project',
-            description:
-                'Incorporated VR and 3D elements using Three.js. Boosted user engagement by 25% through interface design optimization. ArtVisio allows users to walk in virtual galleries with VR capabilities.',
+            description: 'Incorporated VR and 3D elements using Three.js. Boosted user engagement by 25% through interface design optimization. ArtVisio allows users to walk in virtual galleries with VR capabilities.',
             image: projectImage1,
             link: '/projects/artvisio',
             github: 'https://github.com/username/artvisio',
@@ -18,8 +17,7 @@ function ProjectSection() {
         {
             date: 'Mar 15, 2023',
             title: 'NHS Booking System',
-            description:
-                'Collaborated on the development of a booking system for NHS patients, enhancing system efficiency by 30% and optimizing booking processes. This project involved SQL integration and advanced scheduling features.',
+            description: 'Collaborated on the development of a booking system for NHS patients, using React, PHP, and SQL. Enhanced system efficiency by 30%, optimizing booking processes and streamlining the user experience.',
             image: projectImage2,
             link: '/projects/nhs-booking',
             github: 'https://github.com/username/nhs-booking',
@@ -27,11 +25,26 @@ function ProjectSection() {
         {
             date: 'Jan 05, 2023',
             title: 'Westminster Skin Consultation Manager',
-            description:
-                'Created a Java-based consultation management system, built a GUI for managing doctors, patients, and consultations. This project streamlined the consultation workflow for Westminster’s dermatology department.',
+            description: 'Created a Java-based consultation management system, built a GUI for managing doctors, patients, and consultations. Executed comprehensive testing with JUnit, ensuring system robustness and performance.',
             image: projectImage3,
             link: '/projects/consultation-manager',
             github: 'https://github.com/username/consultation-manager',
+        },
+        {
+            date: 'Feb 15, 2022',
+            title: 'Multi-threaded Ticket Machine Application',
+            description: 'Designed and implemented a multi-threaded Java application for ticket vending, optimizing transaction speed by 20% and improving system reliability by 15%.',
+            image: projectImage2, // Replace with actual image
+            link: '/projects/ticket-machine',
+            github: 'https://github.com/username/ticket-machine',
+        },
+        {
+            date: 'Nov 10, 2021',
+            title: 'Weather Application',
+            description: 'Created a Swift application that displays real-time weather data using API integration. Enhanced user interface and usability by 20%, improving overall user engagement.',
+            image: projectImage3, // Replace with actual image
+            link: '/projects/weather-app',
+            github: 'https://github.com/username/weather-app',
         },
     ];
 
@@ -53,7 +66,7 @@ function ProjectSection() {
                 <div className="flex justify-center my-5 lg:py-8">
                     <div className="flex items-center">
                         <span className="w-24 h-[2px] bg-[#2B2E35]"></span>
-                        <span className="bg-[#2B2E35] w-fit text-[#E8E8E8] p-2 px-5 text-6xl rounded-md">
+                        <span className="bg-[#0A1F44] w-fit text-[#E8E8E8] p-2 px-5 text-6xl rounded-md">
                             Projects
                         </span>
                         <span className="w-24 h-[2px] bg-[#2B2E35]"></span>
