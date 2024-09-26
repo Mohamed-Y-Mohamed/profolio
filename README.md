@@ -1,70 +1,84 @@
-# Getting Started with Create React App
+# Portfolio Website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A responsive and dynamic portfolio website designed to showcase various projects, skills, and experience in a clean, modern layout. The site includes smooth scrolling, animations, and dedicated sections for projects, skills, education, and a contact form.
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Projects](#projects)
+- [Skills](#skills)
+- [Contact](#contact)
+- [License](#license)
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Responsive Layout**: Adaptable to both desktop and mobile devices.
+- **Smooth Navigation**: Scrolls smoothly to different sections and highlights the active section.
+- **Project Showcase**: Key projects with descriptions, images, and links to GitHub repositories.
+- **Dynamic Animations**: Utilizes Lottie animations and hover effects for enhanced user interaction.
+- **Contact Form**: Built-in form for direct communication.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Technologies Used
 
-### `npm test`
+- **Frontend**: React, React Router, Tailwind CSS, Lottie, React Icons
+- **Backend (for project demos)**: Node.js, Express.js, MongoDB
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Installation
 
-### `npm run build`
+To run this project locally:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/your-repository-url.git
+    ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. Navigate to the project directory:
+    ```bash
+    cd portfolio-website
+    ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. Install the dependencies:
+    ```bash
+    npm install
+    ```
 
-### `npm run eject`
+4. Start the project:
+    ```bash
+    npm start
+    ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+The project will be running on `http://localhost:3000`.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Projects
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 1. Project One
+- **Description**: A project utilizing VR and 3D elements to enhance user interaction.
+- **Tech Stack**: React, Three.js, Node.js, MongoDB
+- **GitHub Link**: [View Project](https://github.com/your-repository-url)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 2. Project Two
+- **Description**: A web-based system optimized for performance in managing large data sets.
+- **Tech Stack**: React, SQL, Node.js, MongoDB
+- **GitHub Link**: [View Project](https://github.com/your-repository-url)
 
-## Learn More
+### 3. Project Three
+- **Description**: A consultation management system developed to streamline workflows.
+- **Tech Stack**: Java, MySQL, Swing
+- **GitHub Link**: [View Project](https://github.com/your-repository-url)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Skills
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **Frontend**: React, JavaScript, CSS, Bootstrap, Tailwind CSS
+- **Backend**: Node.js, Express.js, MongoDB, SQL
+- **Other Tools**: Docker, Git, GitHub, Lottie
+- **Concepts**: Object-Oriented Programming (OOP), Algorithms, Data Structures
 
-### Code Splitting
+## Contact
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+For inquiries or collaborations, use the contact form available on the site or reach out through GitHub.
 
-### Analyzing the Bundle Size
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is under a **Commercial License**. Redistribution, publishing, or commercial use without express written permission from the owner is prohibited.
