@@ -84,7 +84,7 @@ const About = () => {
                                 </p>
                                 {/* Call to Action Button */}
                                 <a
-                                    href="#"
+                                    href=""
                                     className="inline-flex items-center justify-center py-3 text-lg sm:text-xl font-medium text-center text-[#E8E8E8] border border-transparent rounded-full px-6 sm:px-7 bg-[#3BC4C4] hover:bg-opacity-90"
                                 >
                                     Let's Connect
