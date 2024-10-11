@@ -7,12 +7,12 @@ import projectImage3 from '../assets/image/hero.jpg';
 function ProjectSection() {
     const projects = [
         {
-            date: 'Dec 22, 2023',
+            date: 'Dec 2024 to July 2024',
             title: 'ArtVisio Project',
             description: 'Incorporated VR and 3D elements using Three.js. Boosted user engagement by 25% through interface design optimization. ArtVisio allows users to walk in virtual galleries with VR capabilities.',
             image: projectImage1,
             link: '/projects/artvisio',
-            github: 'https://github.com/username/artvisio',
+            github: 'https://github.com/Mohamed-Y-Mohamed/ArtVisio',
         },
         {
             date: 'Mar 15, 2023',
@@ -20,7 +20,7 @@ function ProjectSection() {
             description: 'Collaborated on the development of a booking system for NHS patients, using React, PHP, and SQL. Enhanced system efficiency by 30%, optimizing booking processes and streamlining the user experience.',
             image: projectImage2,
             link: '/projects/nhs-booking',
-            github: 'https://github.com/username/nhs-booking',
+            github: 'https://github.com/Mohamed-Y-Mohamed/SoftwareDevelopment-Group-E-Project',
         },
         {
             date: 'Jan 05, 2023',
@@ -28,23 +28,23 @@ function ProjectSection() {
             description: 'Created a Java-based consultation management system, built a GUI for managing doctors, patients, and consultations. Executed comprehensive testing with JUnit, ensuring system robustness and performance.',
             image: projectImage3,
             link: '/projects/consultation-manager',
-            github: 'https://github.com/username/consultation-manager',
+            github: 'https://github.com/Mohamed-Y-Mohamed/westminster-Skin-Consultation-Manager',
         },
         {
-            date: 'Feb 15, 2022',
+            date: 'December 15, 2023',
             title: 'Multi-threaded Ticket Machine Application',
             description: 'Designed and implemented a multi-threaded Java application for ticket vending, optimizing transaction speed by 20% and improving system reliability by 15%.',
             image: projectImage2, // Replace with actual image
             link: '/projects/ticket-machine',
-            github: 'https://github.com/username/ticket-machine',
+            github: 'https://github.com/Mohamed-Y-Mohamed/multi-threaded-ticket-machine-software',
         },
         {
-            date: 'Nov 10, 2021',
-            title: 'Weather Application',
-            description: 'Created a Swift application that displays real-time weather data using API integration. Enhanced user interface and usability by 20%, improving overall user engagement.',
+            date: 'july 10, 2024',
+            title: 'To Do List App',
+            description: "Built a Java-based To Do List app using Spring Boot with a simple interface featuring edit, delete, and add task buttons. Implemented task retrieval and AES encryption for enhanced security.",
             image: projectImage3, // Replace with actual image
             link: '/projects/weather-app',
-            github: 'https://github.com/username/weather-app',
+            github: 'https://github.com/Mohamed-Y-Mohamed/ToDoListApp2.0',
         },
     ];
 
