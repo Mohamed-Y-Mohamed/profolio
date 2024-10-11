@@ -18,7 +18,7 @@ function Loader({ onFinish }) {
 
     return (
         <div
-            className={`fixed inset-0 flex flex-col items-center justify-center bg-black text-white z-[210] transition-opacity duration-500 ${fadeOut ? "opacity-0" : "opacity-100"
+            className={`fixed inset-0 flex flex-col items-center justify-center bg-[#0A1F44] text-white z-[210] transition-opacity duration-500 ${fadeOut ? "opacity-0" : "opacity-100"
                 }`}
         >
             {/* SVG Loader */}
