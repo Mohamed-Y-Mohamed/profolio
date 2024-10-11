@@ -78,7 +78,7 @@ function ProjectSection() {
                 <div className="-mx-4 flex flex-wrap">
                     {projects.map((project, index) => (
                         <div key={index} className="w-full px-4 md:w-1/2 lg:w-1/3">
-                            <Link to={project.link}>
+                            <Link to={project.github} target='blank'>
                                 <div
                                     className="group mb-10 border border-gray-500 rounded-lg shadow-lg transition-all hover:shadow-xl hover:border-[#3BC4C4]"
                                     style={{ backgroundColor: '#0d1224' }}
