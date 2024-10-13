@@ -1,71 +1,3 @@
-// import React, { useState, useEffect } from "react";
-// import { Link, useLocation } from "react-router-dom";
-// import image5 from "../assets/image/logo512.png"; // Replace this with your logo
-// import './style/navbar.css';
-// function Header() {
-//     const [isNavOpen, setIsNavOpen] = useState(false);
-//     const location = useLocation();
-
-//     // Toggle navigation open/close
-//     const handleNavToggle = () => {
-//         setIsNavOpen(!isNavOpen);
-//     };
-
-//     useEffect(() => {
-//         // Close the nav when clicking outside or changing the route
-//         setIsNavOpen(false);
-//     }, [location]);
-
-//     return (
-//         <nav className="nav">
-//             <div className="logo">
-//                 <img src={image5} alt="Logo Image" />
-//             </div>
-
-//             {/* Hamburger Menu */}
-//             <div className={`hamburger ${isNavOpen ? "toggle" : ""}`} onClick={handleNavToggle}>
-//                 <div className="line1"></div>
-//                 <div className="line2"></div>
-//                 <div className="line3"></div>
-//             </div>
-
-//             {/* Navigation Links */}
-//             <ul className={`nav-links ${isNavOpen ? "open" : ""}`}>
-//                 <li className={isNavOpen ? "fade" : ""}>
-//                     <Link to="/">Home</Link>
-//                 </li>
-//                 <li className={isNavOpen ? "fade" : ""}>
-//                     <Link to="/about">About</Link>
-//                 </li>
-//                 <li className={isNavOpen ? "fade" : ""}>
-//                     <Link to="/skills">Skills</Link>
-//                 </li>
-//                 <li className={isNavOpen ? "fade" : ""}>
-//                     <Link to="/education">Education</Link>
-//                 </li>
-//                 <li className={isNavOpen ? "fade" : ""}>
-//                     <Link to="/project">My Projects</Link>
-//                 </li>
-//                 <li className={isNavOpen ? "fade" : ""}>
-//                     <Link to="/ContactUs">Contact Me</Link>
-//                 </li>
-
-//             </ul>
-//         </nav>
-//     );
-// }
-
-// export default Header;
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -138,8 +70,13 @@ function Header() {
                     <a onClick={() => handleNavigation("education")}>Education</a>
                 </li>
                 <li className={isNavOpen ? "fade" : ""}>
+                    <a onClick={() => handleNavigation("experience")}>Work History</a>
+                </li>
+
+                <li className={isNavOpen ? "fade" : ""}>
                     <Link to="/project" onClick={() => setIsNavOpen(false)}>My Projects</Link>
                 </li>
+
                 <li className={isNavOpen ? "fade" : ""}>
                     <Link to="/ContactUs" onClick={() => setIsNavOpen(false)}>Contact Me</Link>
                 </li>
