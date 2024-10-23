@@ -114,7 +114,7 @@ body {
     transition: opacity 1s;
 }
 
-/* Glow hover effect for the card border */
+/* Glow hover effect for the card border something */
 .glow-card:hover::before {
     content: "";
     position: absolute;
