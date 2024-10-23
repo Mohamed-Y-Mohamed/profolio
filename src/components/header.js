@@ -1,6 +1,3 @@
-
-
-
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom"; // Add useNavigate
 import image5 from "../assets/image/logo512.png"; // Replace this with your logo
