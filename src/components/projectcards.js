@@ -15,10 +15,18 @@ function ProjectSection() {
             github: 'https://github.com/Mohamed-Y-Mohamed/ArtVisio',
         },
         {
+            date: 'Nov 2024',
+            title: 'Flavour Fusion - Recipe App',
+            description: 'A full-stack recipe app allowing users to explore, like/unlike, and save meals. Key features include user authentication, meal exploration, profile management, and favorite meals.',
+            image: projectImage1, // Replace with actual image
+            link: '/projects/flavour-fusion',
+            github: 'Pending link',
+        },
+        {
             date: 'Mar 15, 2023',
             title: 'NHS Booking System',
             description: 'Collaborated on the development of a booking system for NHS patients, using React, PHP, and SQL. Enhanced system efficiency by 30%, optimizing booking processes and streamlining the user experience.',
-            image: projectImage2,
+            image: projectImage1,
             link: '/projects/nhs-booking',
             github: 'https://github.com/Mohamed-Y-Mohamed/SoftwareDevelopment-Group-E-Project',
         },
@@ -26,7 +34,7 @@ function ProjectSection() {
             date: 'Jan 05, 2023',
             title: 'Westminster Skin Consultation Manager',
             description: 'Created a Java-based consultation management system, built a GUI for managing doctors, patients, and consultations. Executed comprehensive testing with JUnit, ensuring system robustness and performance.',
-            image: projectImage3,
+            image: projectImage1,
             link: '/projects/consultation-manager',
             github: 'https://github.com/Mohamed-Y-Mohamed/westminster-Skin-Consultation-Manager',
         },
@@ -34,19 +42,52 @@ function ProjectSection() {
             date: 'December 15, 2023',
             title: 'Multi-threaded Ticket Machine Application',
             description: 'Designed and implemented a multi-threaded Java application for ticket vending, optimizing transaction speed by 20% and improving system reliability by 15%.',
-            image: projectImage2, // Replace with actual image
+            image: projectImage1, // Replace with actual image
             link: '/projects/ticket-machine',
             github: 'https://github.com/Mohamed-Y-Mohamed/multi-threaded-ticket-machine-software',
         },
         {
-            date: 'july 10, 2024',
+            date: 'July 10, 2024',
             title: 'To Do List App',
-            description: "Built a Java-based To Do List app using Spring Boot with a simple interface featuring edit, delete, and add task buttons. Implemented task retrieval and AES encryption for enhanced security.",
-            image: projectImage3, // Replace with actual image
-            link: '/projects/weather-app',
+            description: 'Built a Java-based To Do List app using Spring Boot with a simple interface featuring edit, delete, and add task buttons. Implemented task retrieval and AES encryption for enhanced security.',
+            image: projectImage1, // Replace with actual image
+            link: '/projects/todo-list',
             github: 'https://github.com/Mohamed-Y-Mohamed/ToDoListApp2.0',
         },
+        {
+            date: 'June 10 2024',
+            title: 'Dice Game',
+            description: 'A Kotlin-based dice game for Android, featuring basic game mechanics for rolling dice and determining outcomes.',
+            image: projectImage1, // Replace with actual image
+            link: '/projects/dice-game',
+            github: 'Pending link',
+        },
+        {
+            date: 'August 10 2024',
+            title: 'Weather Display App',
+            description: 'A weather forecast app in Swift, supporting multiple locations with a visually rich display using custom assets.',
+            image: projectImage1, // Replace with actual image
+            link: '/projects/weather-display',
+            github: 'Pending link',
+        },
+        {
+            date: 'August 20 2024',
+            title: 'Electric Prediction System',
+            description: 'Python-based system for energy usage prediction and data processing, likely involving data analysis with energy datasets.',
+            image: projectImage1, // Replace with actual image
+            link: '/projects/electric-prediction',
+            github: 'Pending link',
+        },
+        {
+            date: 'September 10 2024',
+            title: 'Project Management System',
+            description: 'A React-based project management application, potentially including task tracking, Kanban board, and project planning tools.',
+            image: projectImage1, // Replace with actual image
+            link: '/projects/project-management',
+            github: 'Pending link',
+        },
     ];
+
 
     const [expanded, setExpanded] = useState(null);
 
