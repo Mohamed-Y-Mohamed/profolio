@@ -108,7 +108,7 @@ function ProjectSection() {
                     <div className="flex items-center">
                         <span className="w-24 h-[2px] bg-[#2B2E35]"></span>
                         <span className="bg-[#0A1F44] w-fit text-[#E8E8E8] p-2 px-5 text-6xl rounded-md">
-                            Projects
+                            Recent Projects
                         </span>
                         <span className="w-24 h-[2px] bg-[#2B2E35]"></span>
                     </div>
