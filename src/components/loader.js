@@ -4,20 +4,16 @@ function Loader({ onFinish }) {
     const [fadeOut, setFadeOut] = useState(false);
 
     useEffect(() => {
-        function handleLoad() {
-            setFadeOut(true); // Start fade-out animation
-            setTimeout(() => {
-                onFinish(); // Call onFinish after fade-out is complete
-            }, 500); // 500ms fade-out duration
-        }
+        // Start fade-out animation immediately when the component mounts
+        setFadeOut(true);
+        // After fade-out duration, call onFinish
+        const timer = setTimeout(() => {
+            onFinish();
+        }, 500); // 500ms fade-out duration
 
-        window.addEventListener('load', handleLoad);
-
-        return () => {
-            window.removeEventListener('load', handleLoad);
-        };
+        // Cleanup the timeout when the component unmounts
+        return () => clearTimeout(timer);
     }, [onFinish]);
-
     return (
         <div
             className={`fixed inset-0 flex flex-col items-center justify-center bg-[#0A1F44] text-white z-[210] transition-opacity duration-500 ${fadeOut ? "opacity-0" : "opacity-100"

@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import projectImage1 from '../assets/image/hero.jpg';
-import projectImage2 from '../assets/image/hero.jpg';
-import projectImage3 from '../assets/image/hero.jpg';
-
+import mealRecipe from "../assets/image/recipeMeal.png";
+import artvisio from '../assets/image/home.png';
+import todo from "../assets/image/todo.png";
 function ProjectSection() {
     const projects = [
         {
             date: 'Dec 2024 to July 2024',
             title: 'ArtVisio Project',
             description: 'Incorporated VR and 3D elements using Three.js. Boosted user engagement by 25% through interface design optimization. ArtVisio allows users to walk in virtual galleries with VR capabilities.',
-            image: projectImage1,
+            image: artvisio,
             link: '/projects/artvisio',
             github: 'https://github.com/Mohamed-Y-Mohamed/ArtVisio',
         },
@@ -18,7 +18,7 @@ function ProjectSection() {
             date: 'Nov 2024',
             title: 'Flavour Fusion - Recipe App',
             description: 'A full-stack recipe app allowing users to explore, like/unlike, and save meals. Key features include user authentication, meal exploration, profile management, and favorite meals.',
-            image: projectImage1, // Replace with actual image
+            image: mealRecipe, // Replace with actual image
             link: '/projects/flavour-fusion',
             github: 'https://github.com/Mohamed-Y-Mohamed/Recipe_meal_App',
         },
@@ -83,7 +83,7 @@ function ProjectSection() {
             date: 'September 10, 2024',
             title: 'Java-based To-Do List Application',
             description: 'A JavaFX application that allows users to create, edit, delete, and manage tasks with additional security features. It includes persistent storage with encryption to ensure data security.',
-            image: projectImage1, // Replace with the actual image
+            image: todo,
             link: '/projects/todo-list-app',
             github: 'https://github.com/Mohamed-Y-Mohamed/ToDoListApp2.0',
         }
@@ -129,7 +129,7 @@ function ProjectSection() {
                                         <img
                                             src={project.image}
                                             alt={project.title}
-                                            className="w-full transition-transform duration-500 group-hover:rotate-6 group-hover:scale-110"
+                                            className="w-full transition-transform duration-500 group-hover:rotate-6 group-hover:scale-110 min-h-[499px] max-h-[500px]"
                                         />
                                     </div>
                                     <div className="p-6">
