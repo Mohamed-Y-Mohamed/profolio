@@ -20,7 +20,7 @@ function ProjectSection() {
             description: 'A full-stack recipe app allowing users to explore, like/unlike, and save meals. Key features include user authentication, meal exploration, profile management, and favorite meals.',
             image: projectImage1, // Replace with actual image
             link: '/projects/flavour-fusion',
-            github: 'Pending link',
+            github: 'https://github.com/Mohamed-Y-Mohamed/Recipe_meal_App',
         },
         {
             date: 'Mar 15, 2023',
@@ -60,7 +60,7 @@ function ProjectSection() {
             description: 'A Kotlin-based dice game for Android, featuring basic game mechanics for rolling dice and determining outcomes.',
             image: projectImage1, // Replace with actual image
             link: '/projects/dice-game',
-            github: 'Pending link',
+            github: 'https://github.com/Mohamed-Y-Mohamed/dice-game-app',
         },
         {
             date: 'August 10 2024',
@@ -68,7 +68,7 @@ function ProjectSection() {
             description: 'A weather forecast app in Swift, supporting multiple locations with a visually rich display using custom assets.',
             image: projectImage1, // Replace with actual image
             link: '/projects/weather-display',
-            github: 'Pending link',
+            github: 'https://github.com/Mohamed-Y-Mohamed/weather-application',
         },
         {
             date: 'August 20 2024',
@@ -76,16 +76,17 @@ function ProjectSection() {
             description: 'Python-based system for energy usage prediction and data processing, likely involving data analysis with energy datasets.',
             image: projectImage1, // Replace with actual image
             link: '/projects/electric-prediction',
-            github: 'Pending link',
+            github: 'https://github.com/Mohamed-Y-Mohamed/Electric-Prediction-System',
         },
+
         {
-            date: 'September 10 2024',
-            title: 'Project Management System',
-            description: 'A React-based project management application, potentially including task tracking, Kanban board, and project planning tools.',
-            image: projectImage1, // Replace with actual image
-            link: '/projects/project-management',
-            github: 'Pending link',
-        },
+            date: 'September 10, 2024',
+            title: 'Java-based To-Do List Application',
+            description: 'A JavaFX application that allows users to create, edit, delete, and manage tasks with additional security features. It includes persistent storage with encryption to ensure data security.',
+            image: projectImage1, // Replace with the actual image
+            link: '/projects/todo-list-app',
+            github: 'https://github.com/Mohamed-Y-Mohamed/ToDoListApp2.0',
+        }
     ];
 
 

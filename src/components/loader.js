@@ -4,16 +4,18 @@ function Loader({ onFinish }) {
     const [fadeOut, setFadeOut] = useState(false);
 
     useEffect(() => {
-        // Show loader for 2 seconds, then trigger the fade-out
-        const timer = setTimeout(() => {
+        function handleLoad() {
             setFadeOut(true); // Start fade-out animation
             setTimeout(() => {
                 onFinish(); // Call onFinish after fade-out is complete
             }, 500); // 500ms fade-out duration
-        }, 2000); // Show loader for 2 seconds
+        }
 
-        // Cleanup the timeout on component unmount
-        return () => clearTimeout(timer);
+        window.addEventListener('load', handleLoad);
+
+        return () => {
+            window.removeEventListener('load', handleLoad);
+        };
     }, [onFinish]);
 
     return (
