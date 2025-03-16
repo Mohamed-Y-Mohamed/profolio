@@ -86,7 +86,7 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="py-20 relative overflow-hidden bg-gradient-to-b from-slate-900 to-slate-800"
+      className="py-16 relative overflow-hidden bg-gradient-to-b from-slate-900 to-slate-800"
       ref={containerRef}
     >
       {/* Dynamic background glow */}
@@ -107,7 +107,7 @@ export default function Skills() {
         style={gridPatternStyles}
       ></div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="w-full mx-auto px-2 sm:px-4 relative z-10">
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}

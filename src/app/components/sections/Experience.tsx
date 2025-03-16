@@ -53,7 +53,7 @@ export default function Experience() {
     <section
       id="experience"
       ref={ref}
-      className="py-20 relative bg-gradient-to-b from-slate-900 to-slate-800 overflow-hidden"
+      className="py-16 relative bg-gradient-to-b from-slate-900 to-slate-800 overflow-hidden"
     >
       {/* Grid pattern overlay */}
       <div className="absolute inset-0" style={gridPatternStyles}></div>
@@ -62,7 +62,7 @@ export default function Experience() {
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-teal-500/5 rounded-full blur-3xl -z-0"></div>
       <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl -z-0"></div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="w-full mx-auto px-2 sm:px-4 relative z-10">
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}

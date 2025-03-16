@@ -95,7 +95,7 @@ export default function Contact() {
     <section
       id="contact"
       ref={ref}
-      className="py-20 relative overflow-hidden bg-gradient-to-b from-slate-800 to-slate-900"
+      className="py-16 relative overflow-hidden bg-gradient-to-b from-slate-800 to-slate-900"
     >
       {/* Grid pattern overlay */}
       <div className="absolute inset-0" style={gridPatternStyles}></div>
@@ -104,7 +104,7 @@ export default function Contact() {
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl -z-0"></div>
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl -z-0"></div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="w-full mx-auto px-2 sm:px-4 relative z-10">
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
@@ -158,17 +158,17 @@ export default function Contact() {
                   transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 >
                   <div className="p-3.5 bg-gradient-to-br from-cyan-500/20 to-cyan-500/10 text-cyan-400 rounded-lg flex items-center justify-center backdrop-blur-sm border border-cyan-500/20">
-                    <FaEnvelope size={20} />
+                    <FaLinkedin size={20} />
                   </div>
                   <div>
                     <h4 className="text-lg font-medium mb-1 text-white">
-                      Email
+                      Linkedin
                     </h4>
                     <a
-                      href="mailto:mohamed.y.mohamed@example.com"
+                      href="https://www.linkedin.com/in/mohamed-yusuf-mohamed-896464161/"
                       className="text-slate-300 hover:text-cyan-400 transition-colors"
                     >
-                      mohamed.y.mohamed@example.com
+                      Lets Talk
                     </a>
                   </div>
                 </motion.div>
@@ -179,17 +179,17 @@ export default function Contact() {
                   transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 >
                   <div className="p-3.5 bg-gradient-to-br from-cyan-500/20 to-cyan-500/10 text-cyan-400 rounded-lg flex items-center justify-center backdrop-blur-sm border border-cyan-500/20">
-                    <FaPhoneAlt size={20} />
+                    <FaGithub size={20} />
                   </div>
                   <div>
                     <h4 className="text-lg font-medium mb-1 text-white">
-                      Phone
+                      Github to Collaborate
                     </h4>
                     <a
-                      href="tel:+441234567890"
+                      href="https://github.com/Mohamed-Y-Mohamed"
                       className="text-slate-300 hover:text-cyan-400 transition-colors"
                     >
-                      +44 123 456 7890
+                      Lets Collaborate
                     </a>
                   </div>
                 </motion.div>

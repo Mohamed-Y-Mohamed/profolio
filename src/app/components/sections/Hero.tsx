@@ -129,7 +129,7 @@ export default function Hero() {
   return (
     <div
       ref={heroRef}
-      className="relative min-h-[91vh] flex items-center overflow-hidden bg-gradient-to-b from-slate-900 via-slate-800 to-slate-800"
+      className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-slate-900 via-slate-800 to-slate-800 pt-20"
     >
       {/* Background elements */}
       <div className="absolute inset-0 -z-10">
@@ -147,7 +147,7 @@ export default function Hero() {
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl -z-10"></div>
       </div>
 
-      <div className="container mx-auto px-4 py-16 md:py-24">
+      <div className="w-full mx-auto px-2 sm:px-4 py-8 md:py-12">
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <motion.div
             className="lg:w-3/5 relative z-10"
@@ -197,7 +197,7 @@ export default function Hero() {
               transition={{ delay: 0.6, duration: 0.8 }}
             >
               <motion.a
-                href="https://drive.google.com/file/d/1R2lmWa5c1IHSu4_2cU9nyOhgUwBLez_o/view?usp=drive_link"
+                href="https://drive.google.com/file/d/15uvisH7qMTCs4033kAXn8jilPDPywxW8/view?usp=drive_link"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-8 py-3.5 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white rounded-full font-medium transition-all duration-300 shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2 group"
