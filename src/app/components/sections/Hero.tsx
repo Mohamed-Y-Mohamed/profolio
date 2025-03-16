@@ -88,9 +88,15 @@ export default function Hero() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 md:gap-6">
-              <button className="px-8 py-3 bg-[#3BC4C4] hover:bg-[#2aa3a3] text-white rounded-full font-medium transition-colors">
-                Download Resume
-              </button>
+              <a
+                href="https://drive.google.com/file/d/1R2lmWa5c1IHSu4_2cU9nyOhgUwBLez_o/view?usp=drive_link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <button className="px-8 py-3 bg-[#3BC4C4] hover:bg-[#2aa3a3] text-white rounded-full font-medium transition-colors">
+                  Download Resume
+                </button>
+              </a>
 
               <div className="flex items-center gap-4 mt-4 sm:mt-0">
                 <a
