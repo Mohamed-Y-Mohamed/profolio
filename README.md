@@ -1,84 +1,36 @@
-# Portfolio Website
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-A responsive and dynamic portfolio website designed to showcase various projects, skills, and experience in a clean, modern layout. The site includes smooth scrolling, animations, and dedicated sections for projects, skills, education, and a contact form.
+## Getting Started
 
-## Table of Contents
+First, run the development server:
 
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Installation](#installation)
-- [Projects](#projects)
-- [Skills](#skills)
-- [Contact](#contact)
-- [License](#license)
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-## Features
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-- **Responsive Layout**: Adaptable to both desktop and mobile devices.
-- **Smooth Navigation**: Scrolls smoothly to different sections and highlights the active section.
-- **Project Showcase**: Key projects with descriptions, images, and links to GitHub repositories.
-- **Dynamic Animations**: Utilizes Lottie animations and hover effects for enhanced user interaction.
-- **Contact Form**: Built-in form for direct communication.
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-## Technologies Used
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-- **Frontend**: React, React Router, Tailwind CSS, Lottie, React Icons
-- **Backend (for project demos)**: Node.js, Express.js, MongoDB
+## Learn More
 
-## Installation
+To learn more about Next.js, take a look at the following resources:
 
-To run this project locally:
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/your-repository-url.git
-    ```
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-2. Navigate to the project directory:
-    ```bash
-    cd portfolio-website
-    ```
+## Deploy on Vercel
 
-3. Install the dependencies:
-    ```bash
-    npm install
-    ```
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-4. Start the project:
-    ```bash
-    npm start
-    ```
-
-The project will be running on `http://localhost:3000`.
-
-## Projects
-
-### 1. Project One
-- **Description**: A project utilizing VR and 3D elements to enhance user interaction.
-- **Tech Stack**: React, Three.js, Node.js, MongoDB
-- **GitHub Link**: [View Project](https://github.com/your-repository-url)
-
-### 2. Project Two
-- **Description**: A web-based system optimized for performance in managing large data sets.
-- **Tech Stack**: React, SQL, Node.js, MongoDB
-- **GitHub Link**: [View Project](https://github.com/your-repository-url)
-
-### 3. Project Three
-- **Description**: A consultation management system developed to streamline workflows.
-- **Tech Stack**: Java, MySQL, Swing
-- **GitHub Link**: [View Project](https://github.com/your-repository-url)
-
-## Skills
-
-- **Frontend**: React, JavaScript, CSS, Bootstrap, Tailwind CSS
-- **Backend**: Node.js, Express.js, MongoDB, SQL
-- **Other Tools**: Docker, Git, GitHub, Lottie
-- **Concepts**: Object-Oriented Programming (OOP), Algorithms, Data Structures
-
-## Contact
-
-For inquiries or collaborations, use the contact form available on the site or reach out through GitHub.
-
-## License
-
-This project is under a **Commercial License**. Redistribution, publishing, or commercial use without express written permission from the owner is prohibited.
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
