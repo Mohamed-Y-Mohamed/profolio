@@ -1,10 +1,13 @@
 // /app/components/sections/Contact.tsx
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { useState, useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { useState, useRef, useEffect } from "react";
+import {
+  motion,
+  useInView,
+  useAnimation,
+  AnimatePresence,
+} from "framer-motion";
 import {
   FaEnvelope,
   FaMapMarkerAlt,
@@ -12,6 +15,8 @@ import {
   FaPaperPlane,
   FaGithub,
   FaLinkedin,
+  FaCheck,
+  FaExclamationTriangle,
 } from "react-icons/fa";
 import { useForm } from "@formspree/react";
 
@@ -26,11 +31,23 @@ export default function Contact() {
 
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [focusedInput, setFocusedInput] = useState<string | null>(null);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const controls = useAnimation();
 
   // Formspree integration
   const [state, handleFormspreeSubmit] = useForm("meojbrzj"); // Your formspree form ID
+
+  useEffect(() => {
+    if (isInView) {
+      controls.start({
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.6 },
+      });
+    }
+  }, [isInView, controls]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -42,9 +59,9 @@ export default function Contact() {
   const validateForm = () => {
     if (!formData.fullName) return "Please fill in your full name.";
     if (!formData.email) return "Please fill in your email.";
-    if (!formData.phone) return "Please fill in your phone number.";
-    if (!formData.subject) return "Please fill in the subject.";
     if (!formData.message) return "Please fill in your message.";
+    if (!/^\S+@\S+\.\S+$/.test(formData.email))
+      return "Please enter a valid email address.";
     return "";
   };
 
@@ -65,116 +82,168 @@ export default function Contact() {
     handleFormspreeSubmit(e);
   };
 
+  // Create grid pattern background
+  const gridPatternStyles = {
+    backgroundSize: "30px 30px",
+    backgroundImage: `
+      linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px)
+    `,
+  };
+
   return (
     <section
       id="contact"
       ref={ref}
-      className="py-20 bg-slate-50 dark:bg-slate-800 relative overflow-hidden"
+      className="py-20 relative overflow-hidden bg-gradient-to-b from-slate-800 to-slate-900"
     >
-      <div className="absolute top-20 left-10 w-64 h-64 rounded-full bg-[#3BC4C4]/5 blur-3xl"></div>
-      <div className="absolute bottom-10 right-10 w-80 h-80 rounded-full bg-[#3BC4C4]/5 blur-3xl"></div>
+      {/* Grid pattern overlay */}
+      <div className="absolute inset-0" style={gridPatternStyles}></div>
 
-      <div className="container mx-auto px-4 relative">
+      {/* Background decorative elements */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl -z-0"></div>
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl -z-0"></div>
+
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          animate={controls}
         >
-          <div className="flex justify-center mb-4">
-            <div className="w-3/4 max-w-md">
-              <div className="h-[1px] bg-gradient-to-r from-transparent via-[#3BC4C4] to-transparent w-full" />
-            </div>
-          </div>
+          <motion.div
+            initial={{ width: 0 }}
+            animate={isInView ? { width: "100%" } : {}}
+            transition={{ duration: 1, delay: 0.5 }}
+            className="h-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent w-full max-w-md mx-auto mb-8"
+          />
 
-          <h2 className="inline-block text-4xl text-white md:text-5xl font-bold mb-4 relative">
-            Contact Me
-            <div className="absolute -bottom-2 left-0 w-full h-[3px] bg-[#3BC4C4]/50"></div>
+          <h2 className="text-5xl md:text-6xl font-bold mb-6 relative inline-block">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-400">
+              Contact Me
+            </span>
+            <motion.div
+              className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-cyan-400 to-teal-400"
+              initial={{ width: 0 }}
+              whileInView={{ width: "100%" }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.7 }}
+            />
           </h2>
 
-          <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+          <p className="text-lg text-slate-300 max-w-2xl mx-auto">
             Have a question or want to work together? Feel free to reach out to
             me.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-5 gap-10">
+        <div className="grid lg:grid-cols-5 gap-8">
           <motion.div
             className="lg:col-span-2"
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <div className="bg-white dark:bg-slate-800 rounded-xl shadow-md p-8">
-              <h3 className="text-2xl font-bold mb-6">Get In Touch</h3>
+            <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/50 rounded-xl shadow-xl p-8 relative overflow-hidden">
+              {/* Decorative graphic element */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-xl -z-0"></div>
 
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-[#3BC4C4]/10 text-[#3BC4C4] rounded-lg mt-1">
+              <h3 className="text-2xl font-bold mb-8 text-white relative z-10">
+                Get In Touch
+              </h3>
+
+              <div className="space-y-8 relative z-10">
+                <motion.div
+                  className="flex items-start gap-5"
+                  whileHover={{ x: 5 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                >
+                  <div className="p-3.5 bg-gradient-to-br from-cyan-500/20 to-cyan-500/10 text-cyan-400 rounded-lg flex items-center justify-center backdrop-blur-sm border border-cyan-500/20">
                     <FaEnvelope size={20} />
                   </div>
                   <div>
                     <h4 className="text-lg font-medium mb-1 text-white">
                       Email
                     </h4>
-                    <p className="text-slate-600 dark:text-slate-300">
+                    <a
+                      href="mailto:mohamed.y.mohamed@example.com"
+                      className="text-slate-300 hover:text-cyan-400 transition-colors"
+                    >
                       mohamed.y.mohamed@example.com
-                    </p>
+                    </a>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-[#3BC4C4]/10 text-[#3BC4C4] rounded-lg mt-1">
+                <motion.div
+                  className="flex items-start gap-5"
+                  whileHover={{ x: 5 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                >
+                  <div className="p-3.5 bg-gradient-to-br from-cyan-500/20 to-cyan-500/10 text-cyan-400 rounded-lg flex items-center justify-center backdrop-blur-sm border border-cyan-500/20">
                     <FaPhoneAlt size={20} />
                   </div>
                   <div>
                     <h4 className="text-lg font-medium mb-1 text-white">
                       Phone
                     </h4>
-                    <p className="text-slate-600 dark:text-slate-300">
+                    <a
+                      href="tel:+441234567890"
+                      className="text-slate-300 hover:text-cyan-400 transition-colors"
+                    >
                       +44 123 456 7890
-                    </p>
+                    </a>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-[#3BC4C4]/10 text-[#3BC4C4] rounded-lg mt-1">
+                <motion.div
+                  className="flex items-start gap-5"
+                  whileHover={{ x: 5 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                >
+                  <div className="p-3.5 bg-gradient-to-br from-cyan-500/20 to-cyan-500/10 text-cyan-400 rounded-lg flex items-center justify-center backdrop-blur-sm border border-cyan-500/20">
                     <FaMapMarkerAlt size={20} />
                   </div>
                   <div>
                     <h4 className="text-lg font-medium mb-1 text-white">
                       Location
                     </h4>
-                    <p className="text-slate-600 dark:text-slate-300">
-                      London, United Kingdom
-                    </p>
+                    <p className="text-slate-300">London, United Kingdom</p>
                   </div>
-                </div>
+                </motion.div>
               </div>
 
-              <div className="mt-8">
-                <h4 className="text-lg font-medium mb-3 text-white">
+              <div className="mt-12 relative z-10">
+                <h4 className="text-lg font-medium mb-5 text-white">
                   Follow Me
                 </h4>
-                <div className="flex gap-3">
-                  <a
+                <div className="flex gap-4">
+                  <motion.a
                     href="https://www.linkedin.com/in/mohamed-yusuf-mohamed-896464161/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-3 bg-[#3BC4C4]/10 text-[#3BC4C4] rounded-lg hover:bg-[#3BC4C4] hover:text-white transition-colors"
+                    className="p-3.5 bg-gradient-to-br from-cyan-500/20 to-cyan-500/10 text-cyan-400 rounded-lg flex items-center justify-center backdrop-blur-sm border border-cyan-500/20 hover:border-cyan-400/50 hover:text-white transition-all duration-300"
                     aria-label="LinkedIn"
+                    whileHover={{
+                      scale: 1.1,
+                      backgroundColor: "rgba(20, 184, 166, 0.3)",
+                    }}
+                    whileTap={{ scale: 0.97 }}
                   >
                     <FaLinkedin size={20} />
-                  </a>
-                  <a
+                  </motion.a>
+                  <motion.a
                     href="https://github.com/Mohamed-Y-Mohamed"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-3 bg-[#3BC4C4]/10 text-[#3BC4C4] rounded-lg hover:bg-[#3BC4C4] hover:text-white transition-colors"
+                    className="p-3.5 bg-gradient-to-br from-cyan-500/20 to-cyan-500/10 text-cyan-400 rounded-lg flex items-center justify-center backdrop-blur-sm border border-cyan-500/20 hover:border-cyan-400/50 hover:text-white transition-all duration-300"
                     aria-label="GitHub"
+                    whileHover={{
+                      scale: 1.1,
+                      backgroundColor: "rgba(20, 184, 166, 0.3)",
+                    }}
+                    whileTap={{ scale: 0.97 }}
                   >
                     <FaGithub size={20} />
-                  </a>
+                  </motion.a>
                 </div>
               </div>
             </div>
@@ -186,124 +255,230 @@ export default function Contact() {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <div className="bg-white dark:bg-slate-800 rounded-xl shadow-md p-8">
-              <h3 className="text-2xl font-bold mb-6 text-white">
+            <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/50 rounded-xl shadow-xl p-8 relative overflow-hidden">
+              {/* Decorative graphic element */}
+              <div className="absolute top-0 left-1/2 w-40 h-40 bg-teal-500/10 rounded-full blur-xl -z-0"></div>
+              <div className="absolute bottom-0 right-0 w-40 h-40 bg-cyan-500/5 rounded-full blur-xl -z-0"></div>
+
+              <h3 className="text-2xl font-bold mb-6 text-white relative z-10">
                 Send Me a Message
               </h3>
 
-              {state.succeeded && (
-                <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 rounded-lg">
-                  Your message has been sent successfully! I'll get back to you
-                  soon.
-                </div>
-              )}
+              <AnimatePresence>
+                {state.succeeded && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.4 }}
+                    className="mb-6 p-4 bg-gradient-to-r from-green-500/10 to-green-500/5 border border-green-500/20 text-green-400 rounded-lg flex items-center gap-3"
+                  >
+                    <div className="p-1.5 bg-green-500/20 rounded-full">
+                      <FaCheck className="text-green-400" size={12} />
+                    </div>
+                    Your message has been sent successfully! I'll get back to
+                    you soon.
+                  </motion.div>
+                )}
 
-              {errorMessage && (
-                <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg">
-                  {errorMessage}
-                </div>
-              )}
+                {errorMessage && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.4 }}
+                    className="mb-6 p-4 bg-gradient-to-r from-red-500/10 to-red-500/5 border border-red-500/20 text-red-400 rounded-lg flex items-center gap-3"
+                  >
+                    <div className="p-1.5 bg-red-500/20 rounded-full">
+                      <FaExclamationTriangle
+                        className="text-red-400"
+                        size={12}
+                      />
+                    </div>
+                    {errorMessage}
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit} className="relative z-10">
                 <div className="grid md:grid-cols-2 gap-6 mb-6">
-                  <div>
-                    <label
+                  <div className="relative">
+                    <motion.label
                       htmlFor="fullName"
-                      className="block text-sm font-medium mb-2 text-white"
+                      className={`block text-sm font-medium mb-2 ${
+                        focusedInput === "fullName"
+                          ? "text-cyan-400"
+                          : "text-slate-300"
+                      } transition-colors duration-200`}
+                      animate={
+                        focusedInput === "fullName" ? { x: 5 } : { x: 0 }
+                      }
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 17,
+                      }}
                     >
                       Full Name
-                    </label>
+                    </motion.label>
                     <input
                       type="text"
                       id="fullName"
                       name="fullName"
                       value={formData.fullName}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#3BC4C4]"
+                      onFocus={() => setFocusedInput("fullName")}
+                      onBlur={() => setFocusedInput(null)}
+                      className="w-full px-4 py-3.5 rounded-lg border border-slate-700 bg-slate-800/60 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all duration-300"
+                      placeholder="John Doe"
                     />
                   </div>
-                  <div>
-                    <label
+                  <div className="relative">
+                    <motion.label
                       htmlFor="email"
-                      className="block text-sm font-medium mb-2 text-white"
+                      className={`block text-sm font-medium mb-2 ${
+                        focusedInput === "email"
+                          ? "text-cyan-400"
+                          : "text-slate-300"
+                      } transition-colors duration-200`}
+                      animate={focusedInput === "email" ? { x: 5 } : { x: 0 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 17,
+                      }}
                     >
                       Email
-                    </label>
+                    </motion.label>
                     <input
                       type="email"
                       id="email"
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#3BC4C4]"
+                      onFocus={() => setFocusedInput("email")}
+                      onBlur={() => setFocusedInput(null)}
+                      className="w-full px-4 py-3.5 rounded-lg border border-slate-700 bg-slate-800/60 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all duration-300"
+                      placeholder="john@example.com"
                     />
                   </div>
                 </div>
 
                 <div className="mb-6">
-                  <label
+                  <motion.label
                     htmlFor="phone"
-                    className="block text-sm font-medium mb-2 text-white"
+                    className={`block text-sm font-medium mb-2 ${
+                      focusedInput === "phone"
+                        ? "text-cyan-400"
+                        : "text-slate-300"
+                    } transition-colors duration-200`}
+                    animate={focusedInput === "phone" ? { x: 5 } : { x: 0 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
                   >
-                    Phone Number
-                  </label>
+                    Phone Number (optional)
+                  </motion.label>
                   <input
                     type="tel"
                     id="phone"
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#3BC4C4]"
+                    onFocus={() => setFocusedInput("phone")}
+                    onBlur={() => setFocusedInput(null)}
+                    className="w-full px-4 py-3.5 rounded-lg border border-slate-700 bg-slate-800/60 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all duration-300"
+                    placeholder="+44 123 456 7890"
                   />
                 </div>
 
                 <div className="mb-6">
-                  <label
+                  <motion.label
                     htmlFor="subject"
-                    className="block text-sm font-medium mb-2 text-white"
+                    className={`block text-sm font-medium mb-2 ${
+                      focusedInput === "subject"
+                        ? "text-cyan-400"
+                        : "text-slate-300"
+                    } transition-colors duration-200`}
+                    animate={focusedInput === "subject" ? { x: 5 } : { x: 0 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
                   >
-                    Subject
-                  </label>
+                    Subject (optional)
+                  </motion.label>
                   <input
                     type="text"
                     id="subject"
                     name="subject"
                     value={formData.subject}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#3BC4C4]"
+                    onFocus={() => setFocusedInput("subject")}
+                    onBlur={() => setFocusedInput(null)}
+                    className="w-full px-4 py-3.5 rounded-lg border border-slate-700 bg-slate-800/60 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all duration-300"
+                    placeholder="Project Inquiry"
                   />
                 </div>
 
-                <div className="mb-6">
-                  <label
+                <div className="mb-8">
+                  <motion.label
                     htmlFor="message"
-                    className="block text-sm font-medium mb-2 text-white"
+                    className={`block text-sm font-medium mb-2 ${
+                      focusedInput === "message"
+                        ? "text-cyan-400"
+                        : "text-slate-300"
+                    } transition-colors duration-200`}
+                    animate={focusedInput === "message" ? { x: 5 } : { x: 0 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
                   >
                     Your Message
-                  </label>
+                  </motion.label>
                   <textarea
                     id="message"
                     name="message"
                     value={formData.message}
                     onChange={handleInputChange}
+                    onFocus={() => setFocusedInput("message")}
+                    onBlur={() => setFocusedInput(null)}
                     rows={5}
-                    className="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#3BC4C4]"
+                    className="w-full px-4 py-3.5 rounded-lg border border-slate-700 bg-slate-800/60 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all duration-300 resize-none"
+                    placeholder="Hello, I'd like to discuss..."
                   ></textarea>
                 </div>
 
-                <button
+                <motion.button
                   type="submit"
                   disabled={state.submitting || isSubmitting}
-                  className="px-6 py-3 bg-[#3BC4C4] hover:bg-[#2aa3a3] text-white rounded-lg font-medium flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed transition-colors"
+                  className="px-8 py-3.5 bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-900 font-medium rounded-lg flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-300 shadow-lg shadow-cyan-500/20"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
                 >
                   {state.submitting ? (
-                    <>Sending...</>
+                    <>
+                      <svg
+                        className="animate-spin -ml-1 mr-2 h-4 w-4 text-slate-900"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      Sending...
+                    </>
                   ) : (
                     <>
                       Send Message <FaPaperPlane />
                     </>
                   )}
-                </button>
+                </motion.button>
               </form>
             </div>
           </motion.div>

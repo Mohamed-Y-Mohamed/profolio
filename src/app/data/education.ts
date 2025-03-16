@@ -10,17 +10,17 @@ export const educations: Education[] = [
   },
   {
     id: 2,
-    title: "Extended Diploma BTEC in ICT",
+    title: "BTEC LEVEL 3 Extended Diploma BTEC in ICT",
     duration: "2020 - 2021",
     institution: "West London College, London",
-    grade: "D*DD (Equivalent to 3 A* A Level)",
+    grade: "D*DD (Equivalent to A*AA in ALevel)",
   },
   {
     id: 3,
     title:
-      "BTEC in ICT (Fundamentals of Computer Science), GCSE Mathematics and English",
+      "BTEC Level 3 Diploma in ICT (Fundamentals of Computer Science), GCSE Mathematics and English",
     duration: "2018 - 2020",
     institution: "West London College, London",
-    grade: "BTEC: D* (Equivalent to 1 A Level), Mathematics: 6, English: 6",
+    grade: "BTEC: D* (Equivalent to A* in A Level), Mathematics: 6, English: 6",
   },
 ]; 
