@@ -196,7 +196,7 @@ export default function About() {
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: 0.7 }}
                 >
-                  I am Mohamed Yusuf Mohamed, a Full Stack Developer with a
+                  I&apos;m Mohamed Yusuf Mohamed, a Full Stack Developer with a
                   strong foundation in creating solutions that aim to simplify
                   processes and enhance user experience. With a background
                   rooted in diverse environments, I approach challenges with a
@@ -230,7 +230,7 @@ export default function About() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  Let's Connect
+                  Let&apos;s Connect
                 </motion.a>
               </motion.div>
             </div>

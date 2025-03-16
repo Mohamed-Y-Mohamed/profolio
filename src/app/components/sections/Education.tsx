@@ -9,12 +9,7 @@ import {
   FaSchool,
   FaUniversity,
 } from "react-icons/fa";
-import {
-  motion,
-  useInView,
-  useAnimation,
-  AnimatePresence,
-} from "framer-motion";
+import { motion, useInView, useAnimation } from "framer-motion";
 import type { Education } from "@/app/types";
 import { educations } from "@/app/data/education";
 

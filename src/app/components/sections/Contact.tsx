@@ -276,8 +276,8 @@ export default function Contact() {
                     <div className="p-1.5 bg-green-500/20 rounded-full">
                       <FaCheck className="text-green-400" size={12} />
                     </div>
-                    Your message has been sent successfully! I'll get back to
-                    you soon.
+                    Your message has been sent successfully! I&apos;ll get back
+                    to you soon.
                   </motion.div>
                 )}
 

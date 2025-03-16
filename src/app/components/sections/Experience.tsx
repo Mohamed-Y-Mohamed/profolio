@@ -10,10 +10,8 @@ import {
 } from "framer-motion";
 import {
   FaBriefcase,
-  FaRegCalendarAlt,
+  FaCalendarAlt,
   FaMapMarkerAlt,
-  FaPlus,
-  FaMinus,
   FaTools,
   FaChevronRight,
   FaChevronDown,
@@ -91,8 +89,8 @@ export default function Experience() {
           </h2>
 
           <p className="text-lg text-slate-300 max-w-2xl mx-auto">
-            My professional journey and the valuable experiences I've gathered
-            along the way.
+            My professional journey and the valuable experiences I&apos;ve
+            gathered along the way.
           </p>
         </motion.div>
 
@@ -194,7 +192,7 @@ export default function Experience() {
 
                     <div className="flex flex-wrap gap-x-6 mt-3 text-sm text-slate-400">
                       <div className="flex items-center gap-1.5 px-3 py-1 bg-slate-800/60 rounded-full border border-slate-700/50">
-                        <FaRegCalendarAlt className="text-cyan-400" size={12} />
+                        <FaCalendarAlt className="text-cyan-400" size={12} />
                         <span>{experience.date}</span>
                       </div>
 

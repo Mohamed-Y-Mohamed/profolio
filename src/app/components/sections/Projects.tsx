@@ -75,13 +75,6 @@ const tagIconMap: Record<string, React.ReactElement<IconProps>> = {
   Backend: <FaServer size={22} />,
 };
 
-// Create hover effect styles with glassmorphism
-const glassEffect = {
-  background: "rgba(255, 255, 255, 0.05)",
-  backdropFilter: "blur(10px)",
-  border: "1px solid rgba(255, 255, 255, 0.1)",
-};
-
 export default function Projects() {
   const [selectedFilter, setSelectedFilter] = useState("All");
   const [showAllProjects, setShowAllProjects] = useState(false);

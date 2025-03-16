@@ -1,7 +1,7 @@
 // /app/components/sections/Hero.jsx
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import Image from "next/image";
 import { FaGithub, FaLinkedin, FaArrowDown, FaDownload } from "react-icons/fa";
 import { motion, useAnimation, useScroll, useTransform } from "framer-motion";
@@ -11,11 +11,16 @@ export default function Hero() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [loopNum, setLoopNum] = useState(0);
   const [delta, setDelta] = useState(200);
-  const toRotate = [
-    "Full Stack Developer",
-    "Creative Problem Solver",
-    "Technology Enthusiast",
-  ];
+
+  const toRotate = useMemo(
+    () => [
+      "Full Stack Developer",
+      "Creative Problem Solver",
+      "Technology Enthusiast",
+    ],
+    []
+  );
+
   const period = 2000;
   const controls = useAnimation();
   const heroRef = useRef(null);
@@ -76,6 +81,8 @@ export default function Hero() {
 
   // Create the particle animation elements
   const createParticles = () => {
+    if (typeof window === "undefined") return null;
+
     return Array.from({ length: 40 }).map((_, index) => (
       <motion.div
         key={index}
@@ -175,10 +182,11 @@ export default function Hero() {
               <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-cyan-400 my-8"></div>
 
               <p className="text-lg md:text-xl mb-10 max-w-2xl text-slate-300 leading-relaxed">
-                Hi, I'm Mohamed Yusuf Mohamed, a Full Stack Developer passionate
-                about building user-friendly solutions. With expertise in both
-                front-end and back-end development, I strive to create impactful
-                technology that simplifies people's lives.
+                Hi, I&apos;m Mohamed Yusuf Mohamed, a Full Stack Developer
+                passionate about building user-friendly solutions. With
+                expertise in both front-end and back-end development, I strive
+                to create impactful technology that simplifies people&apos;s
+                lives.
               </p>
             </motion.div>
 
