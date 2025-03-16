@@ -9,9 +9,7 @@ import {
   AnimatePresence,
 } from "framer-motion";
 import {
-  FaEnvelope,
   FaMapMarkerAlt,
-  FaPhoneAlt,
   FaPaperPlane,
   FaGithub,
   FaLinkedin,
