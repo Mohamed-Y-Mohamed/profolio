@@ -38,18 +38,27 @@ import type { Project } from "@/app/types";
 // Project filter categories
 const filterCategories = [
   "All",
+  "JavaScript",
   "React",
   "Next.js",
   "Java",
+  "Python",
   "Swift",
   "Kotlin",
+  "PHP",
   "Three.js",
   "Node.js",
   "Spring Boot",
-  "API Integration",
-  "Mobile Apps",
-  "Game Development",
-  "UI/UX Design",
+  "Firebase",
+  "MongoDB",
+  "SQL",
+  "AWS",
+  "API",
+  "Authentication",
+  "Tailwind CSS",
+  "Bootstrap",
+  "OOP",
+  "Multithreading",
 ];
 
 interface IconProps {

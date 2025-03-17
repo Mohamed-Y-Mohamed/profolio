@@ -12,13 +12,24 @@
   --color-text-dark: #0F172A;
   --color-text-light: #E8E8E8;
 }
-
-html {
-  scroll-behavior: smooth;
+/* Add this to your globals.css */
+body, html {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
 }
 
-body {
-  min-height: 100vh;
+/* Add appropriate width constraints to containers */
+.container {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Ensure absolute positioned elements stay within their containers */
+.relative {
+  position: relative;
+  overflow: hidden;
 }
 
 /* Background animation */
