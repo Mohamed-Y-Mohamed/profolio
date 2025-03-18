@@ -15,8 +15,8 @@ const navLinks: NavLink[] = [
   { name: "Skills", path: "/#skills", section: "skills" },
   { name: "Education", path: "/#education", section: "education" },
   { name: "Experience", path: "/#experience", section: "experience" },
-  { name: "Projects", path: "/#projects", section: null },
-  { name: "Contact", path: "/#contact", section: null },
+  { name: "Projects", path: "/#projects", section: "projects" },
+  { name: "Contact", path: "/#contact", section: "contact" },
 ];
 
 export default function Navbar() {
@@ -53,19 +53,22 @@ export default function Navbar() {
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });
       setIsNavOpen(false);
+    } else {
+      // If section is not found, we're on a different page
+      window.location.href = `/#${sectionId}`;
     }
   };
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
           ? "bg-[#0A1F44]/80 backdrop-blur-md shadow-md"
           : "bg-transparent"
       }`}
     >
       <nav
-        className={`${styles.container} py-4 flex justify-between items-center`}
+        className={`${styles.container} px-2 sm:px-4 py-4 flex justify-between items-center`}
       >
         <Link href="/" className="flex items-center">
           <Image

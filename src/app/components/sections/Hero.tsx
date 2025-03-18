@@ -1,7 +1,7 @@
 // /app/components/sections/Hero.jsx
 "use client";
 
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import Image from "next/image";
 import { FaGithub, FaLinkedin, FaArrowDown, FaDownload } from "react-icons/fa";
 import { motion, useAnimation, useScroll, useTransform } from "framer-motion";
@@ -34,53 +34,7 @@ export default function Hero() {
   const y = useTransform(scrollYProgress, [0, 1], [0, 300]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
-  useEffect(() => {
-    // Start the animations when component mounts
-    controls.start({
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8 },
-    });
-  }, [controls]);
-
-  useEffect(() => {
-    const handleTyping = () => {
-      const i = loopNum % toRotate.length;
-      const fullTxt = toRotate[i];
-
-      if (isDeleting) {
-        setText(fullTxt.substring(0, text.length - 1));
-      } else {
-        setText(fullTxt.substring(0, text.length + 1));
-      }
-
-      let typingSpeed = 200 - Math.random() * 100;
-
-      if (isDeleting) {
-        typingSpeed /= 2;
-      }
-
-      if (!isDeleting && text === fullTxt) {
-        setTimeout(() => setIsDeleting(true), period);
-        typingSpeed = period;
-      } else if (isDeleting && text === "") {
-        setIsDeleting(false);
-        setLoopNum(loopNum + 1);
-        typingSpeed = 500;
-      }
-
-      setDelta(typingSpeed);
-    };
-
-    const ticker = setTimeout(() => {
-      handleTyping();
-    }, delta);
-
-    return () => clearTimeout(ticker);
-  }, [text, isDeleting, loopNum, delta, toRotate]);
-
-  // Create the particle animation elements
-  const createParticles = () => {
+  const createParticles = useMemo(() => {
     if (typeof window === "undefined") return null;
 
     return Array.from({ length: 40 }).map((_, index) => (
@@ -108,23 +62,66 @@ export default function Hero() {
         }}
       />
     ));
-  };
+  }, []);
 
-  const scrollToAbout = () => {
+  const gridPatternStyles = useMemo(
+    () => ({
+      backgroundSize: "30px 30px",
+      backgroundImage: `
+      linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px)
+    `,
+    }),
+    []
+  );
+
+  const scrollToAbout = useCallback(() => {
     const aboutSection = document.getElementById("about");
     if (aboutSection) {
       aboutSection.scrollIntoView({ behavior: "smooth" });
     }
-  };
+  }, []);
 
-  // Create grid pattern using CSS
-  const gridPatternStyles = {
-    backgroundSize: "30px 30px",
-    backgroundImage: `
-      linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px)
-    `,
-  };
+  const handleTyping = useCallback(() => {
+    const i = loopNum % toRotate.length;
+    const fullTxt = toRotate[i];
+
+    if (isDeleting) {
+      setText(fullTxt.substring(0, text.length - 1));
+    } else {
+      setText(fullTxt.substring(0, text.length + 1));
+    }
+
+    let typingSpeed = 200 - Math.random() * 100;
+
+    if (isDeleting) {
+      typingSpeed /= 2;
+    }
+
+    if (!isDeleting && text === fullTxt) {
+      setTimeout(() => setIsDeleting(true), period);
+      typingSpeed = period;
+    } else if (isDeleting && text === "") {
+      setIsDeleting(false);
+      setLoopNum((prev) => prev + 1);
+      typingSpeed = 500;
+    }
+
+    setDelta(typingSpeed);
+  }, [text, isDeleting, loopNum, toRotate, period]);
+
+  useEffect(() => {
+    const ticker = setTimeout(handleTyping, delta);
+    return () => clearTimeout(ticker);
+  }, [handleTyping, delta]);
+
+  useEffect(() => {
+    controls.start({
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8 },
+    });
+  }, [controls]);
 
   return (
     <div
@@ -140,11 +137,11 @@ export default function Hero() {
         ></div>
 
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-cyan-600/5 via-transparent to-blue-600/5"></div>
-        {createParticles()}
+        {createParticles}
 
-        {/* Glow spots */}
-        <div className="absolute top-1/3 left-1/4 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl -z-10"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl -z-10"></div>
+        {/* Glow spots with reduced repaints */}
+        <div className="absolute top-1/3 left-1/4 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl -z-10 will-change-transform"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl -z-10 will-change-transform"></div>
       </div>
 
       <div className="w-full mx-auto px-2 sm:px-4 py-8 md:py-12">

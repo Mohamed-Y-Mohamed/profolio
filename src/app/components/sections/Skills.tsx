@@ -1,7 +1,7 @@
 // /app/components/sections/Skills.jsx
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback, memo } from "react";
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import { skillsData } from "@/app/data/skills";
 import { Skill } from "@/app/types";
@@ -14,73 +14,94 @@ const skillGroups = [
   { id: "concepts", label: "Concepts" },
 ];
 
-// Simple mapping function to determine skill group
-const getSkillGroup = (skillName: string): string => {
-  const languages = ["JavaScript", "Python", "Java", "Kotlin", "Swift"];
-  const frameworks = ["React"];
-  const databases = ["MongoDB", "Firebase", "MySQL"];
-  const concepts = ["OOP", "Algorithms"];
-
-  if (languages.includes(skillName)) return "languages";
-  if (frameworks.includes(skillName)) return "frameworks";
-  if (databases.includes(skillName)) return "databases";
-  if (concepts.includes(skillName)) return "concepts";
-  return "other";
-};
-
-const gridPatternStyles = {
-  backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.1) 1px, transparent 0)`,
-  backgroundSize: "40px 40px",
-};
-
 export default function Skills() {
   const [activeGroup, setActiveGroup] = useState<string>("all");
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
   const containerRef = useRef<HTMLElement | null>(null);
   const controls = useAnimation();
 
-  // Filter skills based on active group
-  const filteredSkills =
-    activeGroup === "all"
-      ? skillsData
-      : skillsData.filter((skill) => getSkillGroup(skill.name) === activeGroup);
+  // Memoize grid pattern styles
+  const gridPatternStyles = useMemo(
+    () => ({
+      backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.1) 1px, transparent 0)`,
+      backgroundSize: "40px 40px",
+    }),
+    []
+  );
 
-  // Handle group change
-  const handleGroupChange = (group: string) => {
-    setActiveGroup(group);
-    controls.start({
-      opacity: [0.5, 1],
-      scale: [0.97, 1],
-      transition: { duration: 0.3 },
-    });
-  };
+  // Move getSkillGroup inside component and properly memoize it
+  const getSkillGroup = useMemo(() => {
+    const languages = ["JavaScript", "Python", "Java", "Kotlin", "Swift"];
+    const frameworks = ["React"];
+    const databases = ["MongoDB", "Firebase", "MySQL"];
+    const concepts = ["OOP", "Algorithms"];
 
-  // Interactive background effect
+    return (skillName: string): string => {
+      if (languages.includes(skillName)) return "languages";
+      if (frameworks.includes(skillName)) return "frameworks";
+      if (databases.includes(skillName)) return "databases";
+      if (concepts.includes(skillName)) return "concepts";
+      return "other";
+    };
+  }, []);
+
+  // Memoize filtered skills
+  const filteredSkills = useMemo(
+    () =>
+      activeGroup === "all"
+        ? skillsData
+        : skillsData.filter(
+            (skill) => getSkillGroup(skill.name) === activeGroup
+          ),
+    [activeGroup, getSkillGroup]
+  );
+
+  // Optimize group change handler
+  const handleGroupChange = useCallback(
+    (group: string) => {
+      setActiveGroup(group);
+      controls.start({
+        opacity: [0.5, 1],
+        scale: [0.97, 1],
+        transition: { duration: 0.3 },
+      });
+    },
+    [controls]
+  );
+
+  // Optimize mouse move effect
   useEffect(() => {
     if (!containerRef.current) return;
 
+    const container = containerRef.current;
+    let rafId: number;
+
     const handleMouseMove = (e: MouseEvent) => {
-      const { clientX, clientY } = e;
-      const container = containerRef.current;
-      if (!container) return;
+      rafId = requestAnimationFrame(() => {
+        const containerRect = container.getBoundingClientRect();
+        const x = e.clientX - containerRect.left;
+        const y = e.clientY - containerRect.top;
 
-      const containerRect = container.getBoundingClientRect();
-
-      // Calculate position relative to container
-      const x = clientX - containerRect.left;
-      const y = clientY - containerRect.top;
-
-      // Update CSS variables for background effect
-      container.style.setProperty("--mouse-x", `${x}px`);
-      container.style.setProperty("--mouse-y", `${y}px`);
+        container.style.setProperty("--mouse-x", `${x}px`);
+        container.style.setProperty("--mouse-y", `${y}px`);
+      });
     };
 
-    const container = containerRef.current;
-    container?.addEventListener("mousemove", handleMouseMove);
+    container.addEventListener("mousemove", handleMouseMove);
 
     return () => {
-      container?.removeEventListener("mousemove", handleMouseMove);
+      container.removeEventListener("mousemove", handleMouseMove);
+      cancelAnimationFrame(rafId);
     };
+  }, []);
+
+  // Memoize hover handlers
+  const handleMouseEnter = useCallback((skillName: string) => {
+    setHoveredSkill(skillName);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setHoveredSkill(null);
   }, []);
 
   return (
@@ -89,10 +110,10 @@ export default function Skills() {
       className="py-16 relative overflow-hidden bg-gradient-to-b from-slate-900 to-slate-800"
       ref={containerRef}
     >
-      {/* Dynamic background glow */}
+      {/* Dynamic background glow with will-change optimization */}
       <div className="absolute inset-0 z-0 opacity-40">
         <div
-          className="absolute opacity-30 blur-3xl rounded-full bg-cyan-400 w-96 h-96 transition-all duration-700 ease-out"
+          className="absolute opacity-30 blur-3xl rounded-full bg-cyan-400 w-96 h-96 transition-all duration-700 ease-out will-change-transform"
           style={{
             left: "var(--mouse-x, 50%)",
             top: "var(--mouse-y, 50%)",
@@ -187,8 +208,8 @@ export default function Skills() {
                   damping: 20,
                 }}
                 className="relative"
-                onMouseEnter={() => setHoveredSkill(skill.name)}
-                onMouseLeave={() => setHoveredSkill(null)}
+                onMouseEnter={() => handleMouseEnter(skill.name)}
+                onMouseLeave={handleMouseLeave}
               >
                 <SkillCard
                   skill={skill}
@@ -263,8 +284,11 @@ interface SkillCardProps {
   isHovered: boolean;
 }
 
-// Individual skill card component with enhanced animation
-function SkillCard({ skill, isHovered }: SkillCardProps) {
+// Optimize SkillCard component with memo
+const SkillCard = memo(function SkillCard({
+  skill,
+  isHovered,
+}: SkillCardProps) {
   return (
     <motion.div
       className="group relative h-[180px] rounded-xl overflow-hidden flex flex-col items-center justify-center p-6 z-10 bg-gradient-to-b from-slate-800 to-slate-900 border border-slate-700"
@@ -349,4 +373,6 @@ function SkillCard({ skill, isHovered }: SkillCardProps) {
       ></div>
     </motion.div>
   );
-}
+});
+
+SkillCard.displayName = "SkillCard";

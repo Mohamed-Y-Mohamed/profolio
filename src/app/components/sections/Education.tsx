@@ -1,7 +1,7 @@
 // /app/components/sections/Education.jsx
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import {
   FaGraduationCap,
   FaCalendarAlt,
@@ -12,6 +12,7 @@ import {
 import { motion, useInView, useAnimation } from "framer-motion";
 import type { Education } from "@/app/types";
 import { educations } from "@/app/data/education";
+import { memo } from "react";
 
 export default function Education() {
   const ref = useRef(null);
@@ -29,14 +30,26 @@ export default function Education() {
     }
   }, [isInView, controls]);
 
-  // Create grid pattern background
-  const gridPatternStyles = {
-    backgroundSize: "30px 30px",
-    backgroundImage: `
+  // Memoize grid pattern styles
+  const gridPatternStyles = useMemo(
+    () => ({
+      backgroundSize: "30px 30px",
+      backgroundImage: `
       linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px)
     `,
-  };
+    }),
+    []
+  );
+
+  // Memoize hover handlers
+  const handleMouseEnter = useCallback((id: string) => {
+    setHoveredId(id);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setHoveredId(null);
+  }, []);
 
   return (
     <section
@@ -47,9 +60,9 @@ export default function Education() {
       {/* Grid pattern overlay */}
       <div className="absolute inset-0" style={gridPatternStyles}></div>
 
-      {/* Background decorative elements */}
-      <div className="absolute top-20 left-1/4 w-96 h-96 bg-teal-500/5 rounded-full blur-3xl -z-0"></div>
-      <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl -z-0"></div>
+      {/* Background decorative elements with will-change optimization */}
+      <div className="absolute top-20 left-1/4 w-96 h-96 bg-teal-500/5 rounded-full blur-3xl -z-0 will-change-transform"></div>
+      <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl -z-0 will-change-transform"></div>
 
       <div className="w-full mx-auto px-2 sm:px-4 relative z-10">
         <motion.div
@@ -210,8 +223,8 @@ export default function Education() {
                   type: "spring",
                   stiffness: 100,
                 }}
-                onMouseEnter={() => setHoveredId(education.id.toString())}
-                onMouseLeave={() => setHoveredId(null)}
+                onMouseEnter={() => handleMouseEnter(education.id.toString())}
+                onMouseLeave={handleMouseLeave}
               >
                 <EducationCard
                   education={education}
@@ -226,8 +239,8 @@ export default function Education() {
   );
 }
 
-// Modern education card with hover effects
-function EducationCard({
+// Optimize EducationCard component with memo
+const EducationCard = memo(function EducationCard({
   education,
   isHovered,
 }: {
@@ -236,31 +249,36 @@ function EducationCard({
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
 
-  // Track mouse position for glow effect
+  // Optimize mouse move effect with RAF
   useEffect(() => {
     const card = cardRef.current;
     if (!card) return;
 
+    let rafId: number;
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+      rafId = requestAnimationFrame(() => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
 
-      card.style.setProperty("--mouse-x", `${x}px`);
-      card.style.setProperty("--mouse-y", `${y}px`);
+        card.style.setProperty("--mouse-x", `${x}px`);
+        card.style.setProperty("--mouse-y", `${y}px`);
+      });
     };
 
     card.addEventListener("mousemove", handleMouseMove);
-    return () => card.removeEventListener("mousemove", handleMouseMove);
+    return () => {
+      card.removeEventListener("mousemove", handleMouseMove);
+      cancelAnimationFrame(rafId);
+    };
   }, []);
 
   // Get institution icon based on type
   const getInstitutionIcon = () => {
     if (education.institution.includes("University")) {
       return <FaUniversity size={32} />;
-    } else {
-      return <FaSchool size={32} />;
     }
+    return <FaSchool size={32} />;
   };
 
   return (
@@ -331,4 +349,4 @@ function EducationCard({
       </div>
     </motion.div>
   );
-}
+});
