@@ -1,4 +1,3 @@
-// /app/components/sections/Contact.tsx
 "use client";
 
 import { useState, useRef, useEffect } from "react";
@@ -30,6 +29,7 @@ export default function Contact() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [focusedInput, setFocusedInput] = useState<string | null>(null);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
   const controls = useAnimation();
@@ -46,6 +46,29 @@ export default function Contact() {
       });
     }
   }, [isInView, controls]);
+
+  // Handle form success
+  useEffect(() => {
+    if (state.succeeded) {
+      setShowSuccessMessage(true);
+
+      // Reset the form data
+      setFormData({
+        fullName: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: "",
+      });
+
+      // After 5 seconds, hide success message and show the form again
+      const timer = setTimeout(() => {
+        setShowSuccessMessage(false);
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [state.succeeded]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -263,22 +286,6 @@ export default function Contact() {
               </h3>
 
               <AnimatePresence>
-                {state.succeeded && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.4 }}
-                    className="mb-6 p-4 bg-gradient-to-r from-green-500/10 to-green-500/5 border border-green-500/20 text-green-400 rounded-lg flex items-center gap-3"
-                  >
-                    <div className="p-1.5 bg-green-500/20 rounded-full">
-                      <FaCheck className="text-green-400" size={12} />
-                    </div>
-                    Your message has been sent successfully! I&apos;ll get back
-                    to you soon.
-                  </motion.div>
-                )}
-
                 {errorMessage && (
                   <motion.div
                     initial={{ opacity: 0, y: -20 }}
@@ -298,186 +305,234 @@ export default function Contact() {
                 )}
               </AnimatePresence>
 
-              <form onSubmit={handleSubmit} className="relative z-10">
-                <div className="grid md:grid-cols-2 gap-6 mb-6">
-                  <div className="relative">
-                    <motion.label
-                      htmlFor="fullName"
-                      className={`block text-sm font-medium mb-2 ${
-                        focusedInput === "fullName"
-                          ? "text-cyan-400"
-                          : "text-slate-300"
-                      } transition-colors duration-200`}
-                      animate={
-                        focusedInput === "fullName" ? { x: 5 } : { x: 0 }
-                      }
-                      transition={{
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 17,
-                      }}
-                    >
-                      Full Name
-                    </motion.label>
-                    <input
-                      type="text"
-                      id="fullName"
-                      name="fullName"
-                      value={formData.fullName}
-                      onChange={handleInputChange}
-                      onFocus={() => setFocusedInput("fullName")}
-                      onBlur={() => setFocusedInput(null)}
-                      className="w-full px-4 py-3.5 rounded-lg border border-slate-700 bg-slate-800/60 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all duration-300"
-                      placeholder="John Doe"
-                    />
-                  </div>
-                  <div className="relative">
-                    <motion.label
-                      htmlFor="email"
-                      className={`block text-sm font-medium mb-2 ${
-                        focusedInput === "email"
-                          ? "text-cyan-400"
-                          : "text-slate-300"
-                      } transition-colors duration-200`}
-                      animate={focusedInput === "email" ? { x: 5 } : { x: 0 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 17,
-                      }}
-                    >
-                      Email
-                    </motion.label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      onFocus={() => setFocusedInput("email")}
-                      onBlur={() => setFocusedInput(null)}
-                      className="w-full px-4 py-3.5 rounded-lg border border-slate-700 bg-slate-800/60 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all duration-300"
-                      placeholder="john@example.com"
-                    />
-                  </div>
-                </div>
-
-                <div className="mb-6">
-                  <motion.label
-                    htmlFor="phone"
-                    className={`block text-sm font-medium mb-2 ${
-                      focusedInput === "phone"
-                        ? "text-cyan-400"
-                        : "text-slate-300"
-                    } transition-colors duration-200`}
-                    animate={focusedInput === "phone" ? { x: 5 } : { x: 0 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              <AnimatePresence>
+                {showSuccessMessage ? (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ duration: 0.5 }}
+                    className="flex flex-col items-center justify-center py-16 text-center"
                   >
-                    Phone Number (optional)
-                  </motion.label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    onFocus={() => setFocusedInput("phone")}
-                    onBlur={() => setFocusedInput(null)}
-                    className="w-full px-4 py-3.5 rounded-lg border border-slate-700 bg-slate-800/60 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all duration-300"
-                    placeholder="+44 123 456 7890"
-                  />
-                </div>
-
-                <div className="mb-6">
-                  <motion.label
-                    htmlFor="subject"
-                    className={`block text-sm font-medium mb-2 ${
-                      focusedInput === "subject"
-                        ? "text-cyan-400"
-                        : "text-slate-300"
-                    } transition-colors duration-200`}
-                    animate={focusedInput === "subject" ? { x: 5 } : { x: 0 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                    <div className="mb-6 w-20 h-20 bg-gradient-to-r from-green-500 to-teal-500 rounded-full flex items-center justify-center">
+                      <FaCheck className="text-white" size={40} />
+                    </div>
+                    <h4 className="text-2xl font-bold mb-3 text-white">
+                      Thank You!
+                    </h4>
+                    <p className="text-slate-300 mb-6 max-w-md">
+                      Your message has been sent successfully. I'll be reaching
+                      out to you soon.
+                    </p>
+                  </motion.div>
+                ) : (
+                  <motion.form
+                    initial={{ opacity: 1 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    onSubmit={handleSubmit}
+                    className="relative z-10"
                   >
-                    Subject (optional)
-                  </motion.label>
-                  <input
-                    type="text"
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleInputChange}
-                    onFocus={() => setFocusedInput("subject")}
-                    onBlur={() => setFocusedInput(null)}
-                    className="w-full px-4 py-3.5 rounded-lg border border-slate-700 bg-slate-800/60 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all duration-300"
-                    placeholder="Project Inquiry"
-                  />
-                </div>
+                    <div className="grid md:grid-cols-2 gap-6 mb-6">
+                      <div className="relative">
+                        <motion.label
+                          htmlFor="fullName"
+                          className={`block text-sm font-medium mb-2 ${
+                            focusedInput === "fullName"
+                              ? "text-cyan-400"
+                              : "text-slate-300"
+                          } transition-colors duration-200`}
+                          animate={
+                            focusedInput === "fullName" ? { x: 5 } : { x: 0 }
+                          }
+                          transition={{
+                            type: "spring",
+                            stiffness: 400,
+                            damping: 17,
+                          }}
+                        >
+                          Full Name
+                        </motion.label>
+                        <input
+                          type="text"
+                          id="fullName"
+                          name="fullName"
+                          value={formData.fullName}
+                          onChange={handleInputChange}
+                          onFocus={() => setFocusedInput("fullName")}
+                          onBlur={() => setFocusedInput(null)}
+                          className="w-full px-4 py-3.5 rounded-lg border border-slate-700 bg-slate-800/60 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all duration-300"
+                          placeholder="John Doe"
+                        />
+                      </div>
+                      <div className="relative">
+                        <motion.label
+                          htmlFor="email"
+                          className={`block text-sm font-medium mb-2 ${
+                            focusedInput === "email"
+                              ? "text-cyan-400"
+                              : "text-slate-300"
+                          } transition-colors duration-200`}
+                          animate={
+                            focusedInput === "email" ? { x: 5 } : { x: 0 }
+                          }
+                          transition={{
+                            type: "spring",
+                            stiffness: 400,
+                            damping: 17,
+                          }}
+                        >
+                          Email
+                        </motion.label>
+                        <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleInputChange}
+                          onFocus={() => setFocusedInput("email")}
+                          onBlur={() => setFocusedInput(null)}
+                          className="w-full px-4 py-3.5 rounded-lg border border-slate-700 bg-slate-800/60 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all duration-300"
+                          placeholder="john@example.com"
+                        />
+                      </div>
+                    </div>
 
-                <div className="mb-8">
-                  <motion.label
-                    htmlFor="message"
-                    className={`block text-sm font-medium mb-2 ${
-                      focusedInput === "message"
-                        ? "text-cyan-400"
-                        : "text-slate-300"
-                    } transition-colors duration-200`}
-                    animate={focusedInput === "message" ? { x: 5 } : { x: 0 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                  >
-                    Your Message
-                  </motion.label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    onFocus={() => setFocusedInput("message")}
-                    onBlur={() => setFocusedInput(null)}
-                    rows={5}
-                    className="w-full px-4 py-3.5 rounded-lg border border-slate-700 bg-slate-800/60 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all duration-300 resize-none"
-                    placeholder="Hello, I'd like to discuss..."
-                  ></textarea>
-                </div>
-
-                <motion.button
-                  type="submit"
-                  disabled={state.submitting || isSubmitting}
-                  className="px-8 py-3.5 bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-900 font-medium rounded-lg flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-300 shadow-lg shadow-cyan-500/20"
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                >
-                  {state.submitting ? (
-                    <>
-                      <svg
-                        className="animate-spin -ml-1 mr-2 h-4 w-4 text-slate-900"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
+                    <div className="mb-6">
+                      <motion.label
+                        htmlFor="phone"
+                        className={`block text-sm font-medium mb-2 ${
+                          focusedInput === "phone"
+                            ? "text-cyan-400"
+                            : "text-slate-300"
+                        } transition-colors duration-200`}
+                        animate={focusedInput === "phone" ? { x: 5 } : { x: 0 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 400,
+                          damping: 17,
+                        }}
                       >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        ></circle>
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        ></path>
-                      </svg>
-                      Sending...
-                    </>
-                  ) : (
-                    <>
-                      Send Message <FaPaperPlane />
-                    </>
-                  )}
-                </motion.button>
-              </form>
+                        Phone Number (optional)
+                      </motion.label>
+                      <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        onFocus={() => setFocusedInput("phone")}
+                        onBlur={() => setFocusedInput(null)}
+                        className="w-full px-4 py-3.5 rounded-lg border border-slate-700 bg-slate-800/60 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all duration-300"
+                        placeholder="+44 123 456 7890"
+                      />
+                    </div>
+
+                    <div className="mb-6">
+                      <motion.label
+                        htmlFor="subject"
+                        className={`block text-sm font-medium mb-2 ${
+                          focusedInput === "subject"
+                            ? "text-cyan-400"
+                            : "text-slate-300"
+                        } transition-colors duration-200`}
+                        animate={
+                          focusedInput === "subject" ? { x: 5 } : { x: 0 }
+                        }
+                        transition={{
+                          type: "spring",
+                          stiffness: 400,
+                          damping: 17,
+                        }}
+                      >
+                        Subject (optional)
+                      </motion.label>
+                      <input
+                        type="text"
+                        id="subject"
+                        name="subject"
+                        value={formData.subject}
+                        onChange={handleInputChange}
+                        onFocus={() => setFocusedInput("subject")}
+                        onBlur={() => setFocusedInput(null)}
+                        className="w-full px-4 py-3.5 rounded-lg border border-slate-700 bg-slate-800/60 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all duration-300"
+                        placeholder="Project Inquiry"
+                      />
+                    </div>
+
+                    <div className="mb-8">
+                      <motion.label
+                        htmlFor="message"
+                        className={`block text-sm font-medium mb-2 ${
+                          focusedInput === "message"
+                            ? "text-cyan-400"
+                            : "text-slate-300"
+                        } transition-colors duration-200`}
+                        animate={
+                          focusedInput === "message" ? { x: 5 } : { x: 0 }
+                        }
+                        transition={{
+                          type: "spring",
+                          stiffness: 400,
+                          damping: 17,
+                        }}
+                      >
+                        Your Message
+                      </motion.label>
+                      <textarea
+                        id="message"
+                        name="message"
+                        value={formData.message}
+                        onChange={handleInputChange}
+                        onFocus={() => setFocusedInput("message")}
+                        onBlur={() => setFocusedInput(null)}
+                        rows={5}
+                        className="w-full px-4 py-3.5 rounded-lg border border-slate-700 bg-slate-800/60 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all duration-300 resize-none"
+                        placeholder="Hello, I'd like to discuss..."
+                      ></textarea>
+                    </div>
+
+                    <motion.button
+                      type="submit"
+                      disabled={state.submitting || isSubmitting}
+                      className="px-8 py-3.5 bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-900 font-medium rounded-lg flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-300 shadow-lg shadow-cyan-500/20"
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                    >
+                      {state.submitting ? (
+                        <>
+                          <svg
+                            className="animate-spin -ml-1 mr-2 h-4 w-4 text-slate-900"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                          >
+                            <circle
+                              className="opacity-25"
+                              cx="12"
+                              cy="12"
+                              r="10"
+                              stroke="currentColor"
+                              strokeWidth="4"
+                            ></circle>
+                            <path
+                              className="opacity-75"
+                              fill="currentColor"
+                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                            ></path>
+                          </svg>
+                          Sending...
+                        </>
+                      ) : (
+                        <>
+                          Send Message <FaPaperPlane />
+                        </>
+                      )}
+                    </motion.button>
+                  </motion.form>
+                )}
+              </AnimatePresence>
             </div>
           </motion.div>
         </div>
