@@ -321,8 +321,8 @@ export default function Contact() {
                       Thank You!
                     </h4>
                     <p className="text-slate-300 mb-6 max-w-md">
-                      Your message has been sent successfully. I'll be reaching
-                      out to you soon.
+                      Your message has been sent successfully. I&apos;ll be
+                      reaching out to you soon.
                     </p>
                   </motion.div>
                 ) : (
