@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement } from "react";
 
 export interface NavLink {
   name: string;
@@ -15,6 +15,7 @@ export interface Project {
   githubUrl: string;
   liveUrl?: string;
   featured: boolean;
+  domainURL: string | null;
 }
 
 export interface Skill {
@@ -39,4 +40,4 @@ export interface Experience {
   date: string;
   description: string[];
   technologies: string[];
-} 
+}

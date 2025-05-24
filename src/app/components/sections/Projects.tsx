@@ -490,18 +490,36 @@ function ProjectCard({
           </div>
         )}
 
-        {/* GitHub link */}
-        <motion.a
-          href={project.githubUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="absolute top-3 right-3 p-2 bg-white/20 rounded-full text-white hover:bg-white/30 transition-colors backdrop-blur-sm border border-white/10"
-          aria-label="View GitHub Repository"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <FaGithub size={18} />
-        </motion.a>
+        {/* Action buttons - GitHub and Live URL */}
+        <div className="absolute top-3 right-3 flex gap-2">
+          {/* GitHub link */}
+          <motion.a
+            href={project.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 bg-white/20 rounded-full text-white hover:bg-white/30 transition-colors backdrop-blur-sm border border-white/10"
+            aria-label="View GitHub Repository"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <FaGithub size={18} />
+          </motion.a>
+
+          {/* Live URL link - only show if domainURL exists */}
+          {project.domainURL && (
+            <motion.a
+              href={project.domainURL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 bg-white/20 rounded-full text-white hover:bg-white/30 transition-colors backdrop-blur-sm border border-white/10"
+              aria-label="View Live Project"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <FaExternalLinkAlt size={18} />
+            </motion.a>
+          )}
+        </div>
       </div>
 
       {/* Project Info */}
@@ -542,23 +560,6 @@ function ProjectCard({
             </motion.span>
           )}
         </div>
-
-        {/* View details button that appears on hover */}
-        <AnimatePresence>
-          {isHovered && (
-            <motion.div
-              className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-slate-900 to-transparent flex justify-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              transition={{ duration: 0.2 }}
-            >
-              <button className="px-4 py-2 rounded-full bg-cyan-500 text-slate-900 text-sm font-medium flex items-center gap-2 hover:bg-cyan-400 transition-colors">
-                View Details <FaExternalLinkAlt size={10} />
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
     </motion.div>
   );

@@ -22,6 +22,21 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
+      <head>
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-KQ3TN32SLJ"
+        ></script>
+        <script id="google-analytics">
+          {`
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KQ3TN32SLJ');
+  `}
+        </script>
+      </head>
       <body className={`${inter.className} bg-[#0A1F44] text-[#E8E8E8]`}>
         <LoaderWrapper>
           <Navbar />
