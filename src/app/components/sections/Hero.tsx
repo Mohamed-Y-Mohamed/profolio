@@ -194,7 +194,7 @@ export default function Hero() {
               transition={{ delay: 0.6, duration: 0.8 }}
             >
               <motion.a
-                href="https://drive.google.com/file/d/15uvisH7qMTCs4033kAXn8jilPDPywxW8/view?usp=drive_link"
+                href="https://drive.google.com/file/d/1FDoD5EMmgFN1-jL57-_jfgRl8AdORTA3/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-8 py-3.5 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white rounded-full font-medium transition-all duration-300 shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2 group"
