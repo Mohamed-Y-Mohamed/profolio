@@ -32,14 +32,7 @@ export default function Skills() {
   // Move getSkillGroup inside component and properly memoize it
   const getSkillGroup = useMemo(() => {
     const languages = ["JavaScript", "Python", "Java", "Kotlin", "Swift"];
-    const frameworks = [
-      "React,Next.js",
-      "Node.js",
-      "Express",
-      "Django",
-      "Spring Boot",
-      "Flask",
-    ];
+    const frameworks = ["React", "Next.js", "Spring Boot", "Flask"];
     const databases = ["MongoDB", "Firebase", "MySQL"];
     const concepts = ["OOP", "Algorithms"];
 
