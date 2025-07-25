@@ -298,7 +298,6 @@ import {
   FaMapMarkerAlt,
   FaTools,
   FaChevronRight,
-  FaChevronDown,
   FaCheck,
 } from "react-icons/fa";
 import { experiences } from "@/app/data/experience";
@@ -358,7 +357,7 @@ export default function Experience() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.6 }}
           >
-            My professional journey and the practical skills I've developed
+            My professional journey and the practical skills I&apos;ve developed
             through real-world projects
           </motion.p>
         </motion.div>

@@ -557,7 +557,6 @@ import {
   FaCheck,
   FaExclamationTriangle,
   FaEnvelope,
-  FaPhone,
 } from "react-icons/fa";
 import { useForm } from "@formspree/react";
 
@@ -572,6 +571,7 @@ export default function Contact() {
 
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [focusedInput, setFocusedInput] = useState<string | null>(null);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const ref = useRef(null);
@@ -668,7 +668,7 @@ export default function Contact() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Let's Work Together
+            Let&apos;s Work Together
           </motion.h2>
           <motion.div
             className="w-24 h-1 bg-[#00ADB5] mx-auto rounded-full"
@@ -682,8 +682,8 @@ export default function Contact() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.6 }}
           >
-            Ready to contribute to your team? Let's discuss how my skills and
-            passion can help drive your projects forward.
+            Ready to contribute to your team? Let&apos;s discuss how my skills
+            and passion can help drive your projects forward.
           </motion.p>
         </motion.div>
 
@@ -861,8 +861,8 @@ export default function Contact() {
                       Message Sent!
                     </h4>
                     <p className="text-[#B0BEC5] mb-6 max-w-md">
-                      Thank you for reaching out! I'll get back to you within 24
-                      hours to discuss potential opportunities.
+                      Thank you for reaching out! I&apos;ll get back to you
+                      within 24 hours to discuss potential opportunities.
                     </p>
                   </motion.div>
                 ) : (

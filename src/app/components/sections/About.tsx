@@ -406,7 +406,7 @@ export default function About() {
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: 1.3 }}
                 >
-                  I'm eager to{" "}
+                  I&apos;m eager to{" "}
                   <span className="text-[#EEEEEE] font-medium">
                     contribute to meaningful projects
                   </span>{" "}
@@ -431,7 +431,7 @@ export default function About() {
                   }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  Let's Connect
+                  Let&apos;s Connect
                 </motion.a>
               </motion.div>
             </div>

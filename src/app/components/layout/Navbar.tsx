@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { styles } from "@/app/utils/styles";
 import { useScrollEffect } from "@/app/hooks/useScrollEffect";
 import type { NavLink } from "@/app/types";
 
@@ -257,9 +256,34 @@ function MobileNav({
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: "100%" }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className="fixed inset-0 z-40 bg-[#121417]/98 backdrop-blur-md"
+      className="fixed top-0 left-0 right-0 bottom-0 z-40 bg-[#121417] w-full h-full"
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
+        overflow: "hidden",
+      }}
     >
-      <div className="flex flex-col items-center justify-center min-h-screen space-y-8 px-4">
+      {/* Solid background overlay */}
+      <div className="absolute inset-0 bg-[#121417] w-full h-full"></div>
+
+      {/* Background pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div
+          className="w-full h-full"
+          style={{
+            backgroundImage: `
+              linear-gradient(90deg, rgba(0, 173, 181, 0.1) 1px, transparent 1px),
+              linear-gradient(rgba(0, 173, 181, 0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: "30px 30px",
+          }}
+        ></div>
+      </div>
+
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen space-y-8 px-4">
         {links.map((link, index) => (
           <motion.div
             key={link.name}
@@ -273,7 +297,7 @@ function MobileNav({
                 onClick={() => scrollToSection(link.section!)}
                 className={`text-3xl font-medium px-6 py-3 rounded-xl transition-all duration-300 ${
                   activeSection === link.section
-                    ? "text-[#00ADB5] bg-[#00ADB5]/10"
+                    ? "text-[#00ADB5] bg-[#00ADB5]/10 border border-[#00ADB5]/30"
                     : "text-[#EEEEEE] hover:text-[#00ADB5] hover:bg-[#00ADB5]/5"
                 }`}
                 whileHover={{ scale: 1.05 }}
@@ -295,18 +319,21 @@ function MobileNav({
 
         {/* Mobile Contact CTA */}
         <motion.div
-          className="mt-8 pt-8 border-t border-[#393E46]"
+          className="mt-8 pt-8 border-t border-[#393E46] w-full max-w-xs"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.4 }}
         >
           <motion.button
             onClick={() => scrollToSection("contact")}
-            className="px-8 py-3 bg-[#00ADB5] text-[#121417] font-medium rounded-xl hover:bg-[#00FFF5] transition-colors duration-300 shadow-lg"
-            whileHover={{ scale: 1.05 }}
+            className="w-full px-8 py-4 bg-[#00ADB5] text-[#121417] font-medium rounded-xl hover:bg-[#00FFF5] transition-colors duration-300 shadow-lg border border-[#00ADB5]/50"
+            whileHover={{
+              scale: 1.05,
+              boxShadow: "0 0 25px rgba(0, 173, 181, 0.3)",
+            }}
             whileTap={{ scale: 0.95 }}
           >
-            Let's Connect
+            Let&apos;s Connect
           </motion.button>
         </motion.div>
       </div>

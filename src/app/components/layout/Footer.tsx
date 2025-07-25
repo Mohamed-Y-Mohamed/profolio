@@ -129,7 +129,7 @@ export default function Footer() {
           {/* Connect Section */}
           <div>
             <h3 className="text-lg font-bold mb-6 text-[#EEEEEE]">
-              Let's Connect
+              Let&apos;s Connect
             </h3>
             <p className="text-[#B0BEC5] mb-6">
               Ready to discuss opportunities or collaborate on exciting
