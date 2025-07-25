@@ -5,11 +5,12 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+
 import { useScrollEffect } from "@/app/hooks/useScrollEffect";
 import type { NavLink } from "@/app/types";
 
 const navLinks: NavLink[] = [
-  { name: "Home", path: "/", section: null },
+  { name: "Home", path: "/", section: "hero" },
   { name: "About", path: "/#about", section: "about" },
   { name: "Skills", path: "/#skills", section: "skills" },
   { name: "Education", path: "/#education", section: "education" },
@@ -25,28 +26,70 @@ export default function Navbar() {
 
   // Track active section
   useEffect(() => {
-    const observerOptions = {
-      threshold: 0.3,
-      rootMargin: "-100px 0px -50% 0px",
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 200; // Offset for navbar height
+
+      // Define section order and get their positions
+      const sectionIds = [
+        "hero",
+        "about",
+        "skills",
+        "education",
+        "experience",
+        "projects",
+        "contact",
+      ];
+
+      // Special case for hero section (top of page)
+      if (window.scrollY < 300) {
+        setActiveSection("hero");
+        return;
+      }
+
+      // Find the current section based on scroll position
+      let currentSection = "hero";
+
+      for (const sectionId of sectionIds) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const sectionTop = element.offsetTop;
+          const sectionBottom = sectionTop + element.offsetHeight;
+
+          // If scroll position is within this section
+          if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+            currentSection = sectionId;
+            break;
+          }
+          // If scroll position is past this section but before next, use this section
+          else if (scrollPosition >= sectionTop) {
+            currentSection = sectionId;
+          }
+        }
+      }
+
+      setActiveSection(currentSection);
     };
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    }, observerOptions);
+    // Set initial state
+    handleScroll();
 
-    // Observe all sections
-    navLinks.forEach((link) => {
-      if (link.section) {
-        const element = document.getElementById(link.section);
-        if (element) observer.observe(element);
+    // Add scroll listener with throttling
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
       }
-    });
+    };
 
-    return () => observer.disconnect();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   // Close mobile nav when screen size changes to desktop
@@ -157,11 +200,20 @@ interface NavItemProps {
 }
 
 function NavItem({ link, scrollToSection, isActive }: NavItemProps) {
+  const handleClick = () => {
+    if (link.section === "hero") {
+      // For hero section, scroll to top
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else if (link.section) {
+      scrollToSection(link.section);
+    }
+  };
+
   return (
     <div className="relative">
       {link.section ? (
         <motion.button
-          onClick={() => scrollToSection(link.section!)}
+          onClick={handleClick}
           className={`px-4 py-2 rounded-xl font-medium transition-all duration-300 relative group ${
             isActive
               ? "text-[#00ADB5] bg-[#00ADB5]/10"
@@ -294,7 +346,14 @@ function MobileNav({
           >
             {link.section ? (
               <motion.button
-                onClick={() => scrollToSection(link.section!)}
+                onClick={() => {
+                  if (link.section === "hero") {
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                    closeNav();
+                  } else {
+                    scrollToSection(link.section!);
+                  }
+                }}
                 className={`text-3xl font-medium px-6 py-3 rounded-xl transition-all duration-300 ${
                   activeSection === link.section
                     ? "text-[#00ADB5] bg-[#00ADB5]/10 border border-[#00ADB5]/30"
