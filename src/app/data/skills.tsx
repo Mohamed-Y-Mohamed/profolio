@@ -9,6 +9,7 @@ import {
   SiNextdotjs,
   SiSpringboot,
   SiFlask,
+  SiGo,
 } from "react-icons/si";
 
 export const skillsData: Skill[] = [
@@ -27,4 +28,5 @@ export const skillsData: Skill[] = [
   { name: "Flask", icon: <SiFlask />, level: 30 },
   { name: "SpringBoot", icon: <SiSpringboot />, level: 50 },
   { name: "Composer for Kotlin", icon: <SiKotlin />, level: 50 },
+  { name: "Go", icon: <SiMysql />, level: 40 },
 ];
