@@ -28,5 +28,5 @@ export const skillsData: Skill[] = [
   { name: "Flask", icon: <SiFlask />, level: 30 },
   { name: "SpringBoot", icon: <SiSpringboot />, level: 50 },
   { name: "Composer for Kotlin", icon: <SiKotlin />, level: 50 },
-  { name: "Go", icon: <SiMysql />, level: 40 },
+  { name: "Go", icon: <SiGo />, level: 40 },
 ];
