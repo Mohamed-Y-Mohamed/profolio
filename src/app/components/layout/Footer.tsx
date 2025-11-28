@@ -86,7 +86,7 @@ export default function Footer() {
 
             {/* CTA Button */}
             <motion.a
-              href="https://drive.google.com/file/d/1ZTts_zQbUmLqInuCmxonbsy0IrrehDh4/view?usp=sharing"
+              href="https://drive.google.com/file/d/1-8yJaWEle8c7lIn6HLtfQf596VT8Wqb5/view?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 bg-[#00ADB5] text-[#121417] font-medium rounded-xl hover:bg-[#00FFF5] transition-all duration-300 shadow-lg"
