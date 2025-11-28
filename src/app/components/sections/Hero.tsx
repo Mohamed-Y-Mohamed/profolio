@@ -441,28 +441,28 @@ export default function Hero() {
               <div className="space-y-4 mb-10 text-[#B0BEC5]">
                 <p className="text-lg md:text-xl leading-relaxed">
                   <span className="text-[#EEEEEE] font-medium">
-                    Passionate about technology
+                    Passionate about learning and building with technology
                   </span>{" "}
-                  and driven to make an impact in the software development
-                  field. As a recent graduate, I bring fresh perspectives,
-                  modern skills, and an eagerness to contribute to innovative
-                  projects.
+                  and motivated to grow in the software development field. As a
+                  recent graduate, I bring fresh perspectives, developing
+                  skills, and an eagerness to contribute to meaningful projects.
                 </p>
 
                 <p className="text-lg leading-relaxed">
                   <span className="text-[#00ADB5] font-medium">
-                    Curious by nature, proactive in approach, and collaborative
-                    in spirit
+                    Curious by nature, steady in approach, and collaborative in
+                    mindset
                   </span>{" "}
-                  — I thrive in team environments where I can learn from
-                  experienced developers while contributing my technical skills
-                  in full-stack development.
+                  , I thrive in team environments where I can learn from
+                  experienced developers while contributing my strengths across
+                  full-stack development.
                 </p>
 
                 <p className="text-lg leading-relaxed">
                   Ready to bring{" "}
                   <span className="text-[#EEEEEE] font-medium">
-                    dedication, modern technical expertise, and a growth mindset
+                    dedication, practical technical skills, and a growth-focused
+                    mindset
                   </span>{" "}
                   to your development team.
                 </p>
@@ -476,7 +476,7 @@ export default function Hero() {
               transition={{ delay: 0.8, duration: 0.8 }}
             >
               <motion.a
-                href="https://drive.google.com/file/d/1FDoD5EMmgFN1-jL57-_jfgRl8AdORTA3/view?usp=sharing"
+                href="https://drive.google.com/file/d/1ZTts_zQbUmLqInuCmxonbsy0IrrehDh4/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-8 py-4 bg-[#00ADB5] hover:bg-[#00FFF5] hover:text-[#121417] text-[#EEEEEE] rounded-xl font-medium transition-all duration-300 shadow-lg flex items-center justify-center gap-3 group border border-[#00ADB5]/50"
