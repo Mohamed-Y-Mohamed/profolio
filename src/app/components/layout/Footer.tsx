@@ -80,13 +80,13 @@ export default function Footer() {
                   <FaEnvelope size={14} />
                   <span className="text-sm font-medium">Status</span>
                 </div>
-                <p className="text-[#EEEEEE] font-medium">Available</p>
+                <p className="text-[#EEEEEE] font-medium">Available for work</p>
               </div>
             </div>
 
             {/* CTA Button */}
             <motion.a
-              href="https://drive.google.com/file/d/1FDoD5EMmgFN1-jL57-_jfgRl8AdORTA3/view?usp=sharing"
+              href="https://drive.google.com/file/d/1ZTts_zQbUmLqInuCmxonbsy0IrrehDh4/view?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 bg-[#00ADB5] text-[#121417] font-medium rounded-xl hover:bg-[#00FFF5] transition-all duration-300 shadow-lg"
@@ -94,7 +94,7 @@ export default function Footer() {
               whileTap={{ scale: 0.95 }}
             >
               <FaDownload size={16} />
-              Download Resume
+              view Resume
             </motion.a>
           </div>
 
