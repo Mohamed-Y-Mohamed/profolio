@@ -392,12 +392,13 @@ export default function About() {
                 >
                   What sets me apart is my{" "}
                   <span className="text-[#00ADB5] font-medium">
-                    natural curiosity and proactive approach
+                    curiosity, adaptability, and willingness to learn
                   </span>{" "}
-                  to problem-solving. I thrive in collaborative environments
-                  where I can learn from experienced developers while
-                  contributing my energy, modern development practices, and
-                  fresh ideas to drive projects forward.
+                  whenever I face new challenges. I’m someone who takes time to
+                  understand how things work and enjoys breaking problems down
+                  into clear, practical steps. I thrive in environments where I
+                  can learn from others while contributing my own effort, ideas,
+                  and modern development practices.
                 </motion.p>
 
                 <motion.p
@@ -406,13 +407,15 @@ export default function About() {
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: 1.3 }}
                 >
-                  I&apos;m eager to{" "}
+                  I’m eager to{" "}
                   <span className="text-[#EEEEEE] font-medium">
                     contribute to meaningful projects
                   </span>{" "}
-                  where I can apply my technical skills, grow alongside seasoned
-                  professionals, and help create solutions that make a real
-                  impact for users and businesses alike.
+                  where I can apply what I’ve learned so far, improve through
+                  experience, and help build solutions that genuinely support
+                  users and businesses. My focus is on steady improvement,
+                  reliable teamwork, and bringing a positive mindset to every
+                  project.
                 </motion.p>
               </div>
 
