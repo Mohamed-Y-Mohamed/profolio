@@ -1,5 +1,184 @@
 @import "tailwindcss";
 
+/* ============================================================
+   DESIGN TOKENS
+   --accent is the only value that changes at runtime (AccentSwitcher).
+   Everything else is fixed so the palette stays coherent.
+   ============================================================ */
+@theme {
+  --color-bg: #08090a;
+  --color-raise: #0e1012;
+  --color-hi: #15181b;
+  --color-line: #22262a;
+  --color-line-soft: #191d21;
 
+  --color-ink: #f4f3f0;
+  --color-ink-2: #a8abaf;
+  --color-ink-3: #75797e;
+  --color-ink-4: #4a4e53;
 
+  --color-ok: #5fd39a;
+  --color-bad: #ff6b6b;
 
+  --font-display: var(--font-playfair), Georgia, serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  /* runtime-swappable accent */
+  --accent: #e8b64c;
+  --accent-ink: #08090a;
+}
+
+/* ---------- base ---------- */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+html:focus-within {
+  scroll-behavior: smooth;
+}
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ---------- fluid type scale ---------- */
+.t-hero {
+  font-size: clamp(2.9rem, 1.1rem + 8.4vw, 8.5rem);
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+}
+.t-h2 {
+  font-size: clamp(1.9rem, 1.4rem + 2.4vw, 3.4rem);
+  line-height: 1;
+  letter-spacing: -0.028em;
+}
+.t-h3 {
+  font-size: clamp(1.25rem, 1.1rem + 0.7vw, 1.6rem);
+  line-height: 1.16;
+  letter-spacing: -0.024em;
+}
+.t-lead {
+  font-size: clamp(1.1rem, 1rem + 0.5vw, 1.375rem);
+  line-height: 1.5;
+  letter-spacing: -0.011em;
+}
+.t-body {
+  font-size: clamp(0.95rem, 0.9rem + 0.22vw, 1.0625rem);
+}
+.t-sm {
+  font-size: clamp(0.82rem, 0.79rem + 0.15vw, 0.9rem);
+}
+
+/* ---------- shared utilities ---------- */
+.gutter {
+  padding-inline: clamp(1.15rem, 5vw, 4.5rem);
+}
+.section-pad {
+  padding-block: clamp(5rem, 11vw, 10rem);
+}
+.accent {
+  color: var(--accent);
+}
+.bg-accent-solid {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+.border-accent-soft {
+  border-color: color-mix(in srgb, var(--accent) 42%, var(--color-line));
+}
+
+/* ---------- texture ---------- */
+.grain-layer {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- card pointer glow ---------- */
+.card-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.5s;
+  background: radial-gradient(
+    420px 260px at var(--mx, 50%) var(--my, 0%),
+    color-mix(in srgb, var(--accent) 13%, transparent),
+    transparent 68%
+  );
+}
+.card-glow:hover::before {
+  opacity: 1;
+}
+
+/* ---------- animations ---------- */
+@keyframes rise {
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes blip {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+@keyframes spin-fast {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.anim-rise > span {
+  display: block;
+  transform: translateY(105%);
+  animation: rise 1.05s var(--ease-out-expo) forwards;
+}
+.anim-fade-up {
+  opacity: 0;
+  animation: fade-up 0.9s var(--ease-out-expo) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .anim-rise > span {
+    transform: none;
+  }
+  .anim-fade-up {
+    opacity: 1;
+  }
+}
