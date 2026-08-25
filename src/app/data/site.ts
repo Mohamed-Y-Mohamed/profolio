@@ -21,17 +21,17 @@ export const site = {
   cv: "",
 
   /**
-   * Formspree form id — @formspree/react is already a dependency.
-   * Create a form at https://formspree.io and paste the id (e.g. "xdorwkqp").
-   * Left empty, the form falls back to a pre-filled mailto so it still works.
+   * Netlify Forms: submissions land in Netlify > your site > Forms.
+   * Only collects when the site is deployed on Netlify — the name must match
+   * the hidden declaration in NetlifyFormDetect.tsx.
    */
-  formspreeId: "",
+  netlifyFormName: "contact",
 } as const;
 
 export const navLinks: NavLink[] = [
   { name: "Work", href: "#work" },
   { name: "Stack", href: "#stack" },
-  { name: "Path", href: "#path" },
+  { name: "Experience", href: "#experience" },
   { name: "Contact", href: "#contact" },
 ];
 

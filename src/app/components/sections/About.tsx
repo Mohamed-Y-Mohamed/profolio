@@ -23,7 +23,10 @@ export default function About() {
             platform with an Express and Prisma API behind AWS Cognito authentication.
           </p>
           <p className="max-w-[62ch] text-ink-2">
-            Since August 2024 I&apos;ve delivered client work through{" "}
+            I got my first taste of a production codebase interning at{" "}
+            <b className="font-semibold text-ink">Lab Diagnostic</b>, working on a
+            real-time diagnostics dashboard used by healthcare professionals. Since August
+            2024 I&apos;ve delivered client work through{" "}
             <b className="font-semibold text-ink">Fiverr and Freelancer.com</b> — gathering
             requirements directly, designing the API and database, then deploying and
             supporting what I build. I work in Agile teams and lean on version control, TDD

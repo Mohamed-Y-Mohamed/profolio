@@ -7,7 +7,7 @@ import { TextAreaField, TextField } from "@/app/components/ui/Field";
 
 type Values = { name: string; email: string; subject: string; message: string };
 type Errors = Partial<Record<keyof Values, string>>;
-type Phase = "idle" | "sending" | "sent" | "error";
+type Phase = "idle" | "sending" | "sent" | "partial" | "error";
 
 const EMPTY: Values = { name: "", email: "", subject: "", message: "" };
 
@@ -21,28 +21,67 @@ function validate(v: Values): Errors {
   return e;
 }
 
+/**
+ * Two things happen on submit, in this order:
+ *   1. A copy is POSTed to Netlify Forms so it is saved in the dashboard.
+ *   2. The visitor's mail client opens with the message pre-filled.
+ *
+ * Netlify goes first and is awaited — handing over to the mail client
+ * navigates the page, which would cancel an in-flight request.
+ */
 export default function ContactForm() {
   const [values, setValues] = useState<Values>(EMPTY);
   const [errors, setErrors] = useState<Errors>({});
   const [phase, setPhase] = useState<Phase>("idle");
   const [note, setNote] = useState("");
-  const [honeypot, setHoneypot] = useState("");
+  const [botField, setBotField] = useState("");
 
-  const hasEndpoint = site.formspreeId.trim().length > 0;
-
-  const set = (k: keyof Values) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setValues((v) => ({ ...v, [k]: e.target.value }));
-    if (errors[k]) setErrors((prev) => ({ ...prev, [k]: undefined }));
-  };
+  const set =
+    (k: keyof Values) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setValues((v) => ({ ...v, [k]: e.target.value }));
+      if (errors[k]) setErrors((prev) => ({ ...prev, [k]: undefined }));
+    };
 
   const blur = (k: keyof Values) => () => {
     const e = validate(values);
     setErrors((prev) => ({ ...prev, [k]: e[k] }));
   };
 
+  function openMailClient(v: Values, subject: string) {
+    const body =
+      `From: ${v.name} (${v.email})\n` +
+      (v.subject ? `Re: ${v.subject}\n` : "") +
+      `\n${v.message}`;
+    window.location.href =
+      `mailto:${site.email}?subject=${encodeURIComponent(subject)}` +
+      `&body=${encodeURIComponent(body)}`;
+  }
+
+  async function saveToNetlify(v: Values, subject: string): Promise<boolean> {
+    try {
+      const body = new URLSearchParams({
+        "form-name": site.netlifyFormName,
+        "bot-field": "",
+        name: v.name,
+        email: v.email,
+        subject: subject,
+        message: v.message,
+      });
+      const res = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: body.toString(),
+      });
+      return res.ok;
+    } catch {
+      return false;
+    }
+  }
+
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (honeypot) return; // bot
+    if (botField) return; // honeypot tripped
 
     const found = validate(values);
     setErrors(found);
@@ -53,47 +92,38 @@ export default function ContactForm() {
     }
 
     const subject = values.subject.trim() || `Portfolio enquiry from ${values.name}`;
-
-    if (!hasEndpoint) {
-      const body =
-        `From: ${values.name} (${values.email})\n` +
-        (values.subject ? `Re: ${values.subject}\n` : "") +
-        `\n${values.message}`;
-      window.location.href =
-        `mailto:${site.email}?subject=${encodeURIComponent(subject)}` +
-        `&body=${encodeURIComponent(body)}`;
-      setPhase("sent");
-      setNote("Opening your email client — press send there and it's on its way.");
-      return;
-    }
+    const snapshot = { ...values };
 
     setPhase("sending");
-    setNote("Sending your message…");
-    try {
-      const res = await fetch(`https://formspree.io/f/${site.formspreeId}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ ...values, _subject: subject }),
-      });
-      if (res.ok) {
-        setValues(EMPTY);
-        setPhase("sent");
-        setNote("Thanks — your message is with me. I'll reply within a couple of days.");
-      } else {
-        setPhase("error");
-        setNote(`That didn't send. Please email me directly at ${site.email}.`);
-      }
-    } catch {
-      setPhase("error");
-      setNote(`Network problem — please email me directly at ${site.email}.`);
+    setNote("Saving your message…");
+
+    const saved = await saveToNetlify(snapshot, subject);
+
+    if (saved) {
+      setPhase("sent");
+      setNote(
+        "Saved — I've got your message. Your email client is opening with a copy; you can send it or just close it."
+      );
+      setValues(EMPTY);
+    } else {
+      setPhase("partial");
+      setNote(
+        "Couldn't save a copy here, so your email client is opening instead — press send there and it reaches me."
+      );
     }
+
+    // let the status render before the browser hands over to the mail client
+    window.setTimeout(() => openMailClient(snapshot, subject), 600);
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate>
+    <form onSubmit={onSubmit} noValidate name={site.netlifyFormName} data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value={site.netlifyFormName} />
+
       <div className="grid grid-cols-1 gap-[1.1rem] sm:grid-cols-2">
         <TextField
           id="f-name"
+          name="name"
           label="Name"
           required
           autoComplete="name"
@@ -105,6 +135,7 @@ export default function ContactForm() {
         />
         <TextField
           id="f-email"
+          name="email"
           label="Email"
           required
           type="email"
@@ -118,6 +149,7 @@ export default function ContactForm() {
         <div className="sm:col-span-2">
           <TextField
             id="f-subject"
+            name="subject"
             label="Company / Subject"
             autoComplete="organization"
             placeholder="Graduate engineer role at …"
@@ -128,6 +160,7 @@ export default function ContactForm() {
         <div className="sm:col-span-2">
           <TextAreaField
             id="f-message"
+            name="message"
             label="Message"
             required
             placeholder="A line or two about the role or project…"
@@ -141,13 +174,14 @@ export default function ContactForm() {
 
       {/* honeypot — bots fill this, humans never see it */}
       <div aria-hidden className="absolute left-[-9999px] h-px w-px overflow-hidden">
-        <label htmlFor="f-website">Website</label>
+        <label htmlFor="f-bot">Do not fill this in</label>
         <input
-          id="f-website"
+          id="f-bot"
+          name="bot-field"
           tabIndex={-1}
           autoComplete="off"
-          value={honeypot}
-          onChange={(e) => setHoneypot(e.target.value)}
+          value={botField}
+          onChange={(e) => setBotField(e.target.value)}
         />
       </div>
 
@@ -162,7 +196,7 @@ export default function ContactForm() {
           )}
         </Button>
         <span className="font-mono text-[0.6rem] uppercase tracking-[0.1em] text-ink-4">
-          {hasEndpoint ? "Sends straight to my inbox" : "Opens your email client"}
+          Saved here + opens your email client
         </span>
       </div>
 
@@ -175,7 +209,9 @@ export default function ContactForm() {
               ? "border-ok/45 text-ok"
               : phase === "error"
                 ? "border-bad/45 text-bad"
-                : "border-line text-ink-2"
+                : phase === "partial"
+                  ? "border-line text-ink"
+                  : "border-line text-ink-2"
           }`}
         >
           {note}

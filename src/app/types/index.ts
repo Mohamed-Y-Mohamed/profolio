@@ -39,6 +39,10 @@ export interface TimelineEntry {
   title: string;
   organisation: string;
   period: string;
+  /** which group the entry belongs to */
+  kind: "work" | "education";
+  /** short type label, e.g. "Internship", "Degree" */
+  tag: string;
   points: string[];
 }
 
