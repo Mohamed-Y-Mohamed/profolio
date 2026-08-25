@@ -28,6 +28,11 @@ function validate(v: Values): Errors {
  *
  * Netlify goes first and is awaited — handing over to the mail client
  * navigates the page, which would cancel an in-flight request.
+ *
+ * The POST target is /__forms.html, a static file in /public that carries the
+ * Netlify Forms declaration. The Netlify Next runtime v5 does not scan
+ * prerendered Next output for forms, and a data-netlify attribute on a
+ * prerendered form breaks the build outright.
  */
 export default function ContactForm() {
   const [values, setValues] = useState<Values>(EMPTY);
@@ -68,7 +73,7 @@ export default function ContactForm() {
         subject: subject,
         message: v.message,
       });
-      const res = await fetch("/", {
+      const res = await fetch("/__forms.html", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: body.toString(),
@@ -117,7 +122,7 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate name={site.netlifyFormName} data-netlify="true" netlify-honeypot="bot-field">
+    <form onSubmit={onSubmit} noValidate name={site.netlifyFormName}>
       <input type="hidden" name="form-name" value={site.netlifyFormName} />
 
       <div className="grid grid-cols-1 gap-[1.1rem] sm:grid-cols-2">

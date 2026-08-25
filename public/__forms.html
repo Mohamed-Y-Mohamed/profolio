@@ -1,0 +1,24 @@
+<html>
+  <head></head>
+  <body>
+    <!--
+      Netlify Forms declaration.
+
+      The Netlify Next.js runtime v5 does not scan prerendered Next output for
+      forms, and putting data-netlify on a prerendered form fails the build
+      ("Failed assembling prerendered content for upload"). The declaration has
+      to live in a real static file instead, and the React form POSTs here.
+
+      Field names must match exactly what ContactForm sends.
+      See https://opennext.js.org/netlify/forms
+    -->
+    <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="contact" />
+      <input name="bot-field" type="text" />
+      <input name="name" type="text" />
+      <input name="email" type="text" />
+      <input name="subject" type="text" />
+      <textarea name="message"></textarea>
+    </form>
+  </body>
+</html>
