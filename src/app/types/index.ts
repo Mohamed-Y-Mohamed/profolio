@@ -1,43 +1,58 @@
-import { ReactElement } from "react";
-
 export interface NavLink {
   name: string;
-  path: string;
-  section: string | null;
+  href: string;
+}
+
+export interface ProjectLink {
+  label: string;
+  url: string;
 }
 
 export interface Project {
-  id: number;
+  id: string;
   title: string;
+  role: string;
   description: string;
-  image: string;
   tags: string[];
-  githubUrl: string;
-  liveUrl?: string;
-  featured: boolean;
-  domainURL: string | null;
+  links: ProjectLink[];
+  /** visual weight in the grid */
+  size: "feature" | "half";
+  /** shown as a green LIVE pill when true */
+  isLive?: boolean;
+  /** small mono note top-right when not live, e.g. "Client work" */
+  note?: string;
 }
 
-export interface Skill {
+export interface MinorProject {
+  title: string;
+  meta: string;
+  url: string;
+}
+
+export interface SkillGroup {
+  title: string;
+  items: string[];
+}
+
+export interface TimelineEntry {
+  id: string;
+  title: string;
+  organisation: string;
+  period: string;
+  points: string[];
+}
+
+export interface Certification {
   name: string;
-  icon: ReactElement;
-  level: number;
+  inProgress?: boolean;
 }
 
-export interface Education {
-  id: number;
-  title: string;
-  duration: string;
-  institution: string;
-  grade?: string;
+export interface Stat {
+  value: string;
+  label: string;
 }
 
-export interface Experience {
-  id: number;
-  title: string;
-  company: string;
-  location: string;
-  date: string;
-  description: string[];
-  technologies: string[];
+export interface AccentOption {
+  name: string;
+  hex: string;
 }
