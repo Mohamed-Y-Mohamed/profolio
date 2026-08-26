@@ -33,6 +33,14 @@ function validate(v: Values): Errors {
  * Netlify Forms declaration. The Netlify Next runtime v5 does not scan
  * prerendered Next output for forms, and a data-netlify attribute on a
  * prerendered form breaks the build outright.
+ *
+ * The same target is set as the form's method/action so that if JavaScript
+ * never loads, the browser's native submit still reaches Netlify rather than
+ * dumping the visitor's message into a query string.
+ *
+ * On localhost the POST always returns 405 — `next dev` serves static files
+ * GET-only, and it is Netlify's edge that intercepts it in production. So the
+ * mail-client branch is the one you see locally; that is expected.
  */
 export default function ContactForm() {
   const [values, setValues] = useState<Values>(EMPTY);
@@ -78,8 +86,17 @@ export default function ContactForm() {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: body.toString(),
       });
+      if (!res.ok) {
+        // 405 is expected in `next dev` — static files only accept GET there.
+        // Netlify's edge intercepts the POST in production.
+        console.warn(
+          `[contact] Netlify save unavailable (HTTP ${res.status}). ` +
+            "Expected on localhost; on the live site check Netlify > Forms."
+        );
+      }
       return res.ok;
-    } catch {
+    } catch (err) {
+      console.warn("[contact] Netlify save failed:", err);
       return false;
     }
   }
@@ -100,20 +117,20 @@ export default function ContactForm() {
     const snapshot = { ...values };
 
     setPhase("sending");
-    setNote("Saving your message…");
+    setNote("Sending your message…");
 
     const saved = await saveToNetlify(snapshot, subject);
 
     if (saved) {
       setPhase("sent");
       setNote(
-        "Saved — I've got your message. Your email client is opening with a copy; you can send it or just close it."
+        "Got it — your message is with me. Your email client is opening with a copy, so you can send that too or simply close it."
       );
       setValues(EMPTY);
     } else {
       setPhase("partial");
       setNote(
-        "Couldn't save a copy here, so your email client is opening instead — press send there and it reaches me."
+        "Your email client is opening with your message ready to go — press send there and it comes straight to me."
       );
     }
 
@@ -122,7 +139,13 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate name={site.netlifyFormName}>
+    <form
+      onSubmit={onSubmit}
+      noValidate
+      name={site.netlifyFormName}
+      method="POST"
+      action="/__forms.html"
+    >
       <input type="hidden" name="form-name" value={site.netlifyFormName} />
 
       <div className="grid grid-cols-1 gap-[1.1rem] sm:grid-cols-2">
@@ -201,7 +224,7 @@ export default function ContactForm() {
           )}
         </Button>
         <span className="font-mono text-[0.6rem] uppercase tracking-[0.1em] text-ink-4">
-          Saved here + opens your email client
+          Opens your email client with a copy
         </span>
       </div>
 
