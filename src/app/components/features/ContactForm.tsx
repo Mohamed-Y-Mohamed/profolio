@@ -22,25 +22,26 @@ function validate(v: Values): Errors {
 }
 
 /**
- * Two things happen on submit, in this order:
- *   1. A copy is POSTed to Netlify Forms so it is saved in the dashboard.
- *   2. The visitor's mail client opens with the message pre-filled.
+ * On submit, two requests go out together:
+ *   1. POST /api/contact — sends the email through Mailjet. This is the one
+ *      that matters; its result decides what the visitor is told.
+ *   2. POST /__forms.html — files a copy in Netlify Forms as a durable record.
+ *      Best effort; a failure here is never shown to the visitor.
  *
- * Netlify goes first and is awaited — handing over to the mail client
- * navigates the page, which would cancel an in-flight request.
+ * If the send fails, the mail client opens with the message pre-filled so the
+ * visitor still has a route to us. On success it does not open — hijacking
+ * someone's browser is only justified when the alternative is losing their
+ * message.
  *
- * The POST target is /__forms.html, a static file in /public that carries the
- * Netlify Forms declaration. The Netlify Next runtime v5 does not scan
- * prerendered Next output for forms, and a data-netlify attribute on a
- * prerendered form breaks the build outright.
+ * /__forms.html is a static file in /public carrying the Netlify Forms
+ * declaration. The Netlify Next runtime v5 does not scan prerendered Next
+ * output for forms, and a data-netlify attribute on a prerendered form breaks
+ * the build outright. It is also the form's method/action, so a submit with no
+ * JavaScript still reaches Netlify rather than dumping the message into a
+ * query string.
  *
- * The same target is set as the form's method/action so that if JavaScript
- * never loads, the browser's native submit still reaches Netlify rather than
- * dumping the visitor's message into a query string.
- *
- * On localhost the POST always returns 405 — `next dev` serves static files
- * GET-only, and it is Netlify's edge that intercepts it in production. So the
- * mail-client branch is the one you see locally; that is expected.
+ * On localhost that POST always returns 405 — `next dev` serves static files
+ * GET-only, and it is Netlify's edge that intercepts it in production.
  */
 export default function ContactForm() {
   const [values, setValues] = useState<Values>(EMPTY);
@@ -71,7 +72,26 @@ export default function ContactForm() {
       `&body=${encodeURIComponent(body)}`;
   }
 
-  async function saveToNetlify(v: Values, subject: string): Promise<boolean> {
+  /** The real send. Resolves false on any failure so the caller can fall back. */
+  async function sendEmail(v: Values, subject: string): Promise<boolean> {
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...v, subject, "bot-field": botField }),
+      });
+      if (!res.ok) {
+        console.warn(`[contact] send failed: HTTP ${res.status}`);
+      }
+      return res.ok;
+    } catch (err) {
+      console.warn("[contact] send failed:", err);
+      return false;
+    }
+  }
+
+  /** Durable copy in the Netlify dashboard. Never surfaced to the visitor. */
+  async function fileCopy(v: Values, subject: string): Promise<void> {
     try {
       const body = new URLSearchParams({
         "form-name": site.netlifyFormName,
@@ -88,16 +108,13 @@ export default function ContactForm() {
       });
       if (!res.ok) {
         // 405 is expected in `next dev` — static files only accept GET there.
-        // Netlify's edge intercepts the POST in production.
         console.warn(
-          `[contact] Netlify save unavailable (HTTP ${res.status}). ` +
+          `[contact] Netlify copy unavailable (HTTP ${res.status}). ` +
             "Expected on localhost; on the live site check Netlify > Forms."
         );
       }
-      return res.ok;
     } catch (err) {
-      console.warn("[contact] Netlify save failed:", err);
-      return false;
+      console.warn("[contact] Netlify copy failed:", err);
     }
   }
 
@@ -119,23 +136,24 @@ export default function ContactForm() {
     setPhase("sending");
     setNote("Sending your message…");
 
-    const saved = await saveToNetlify(snapshot, subject);
+    const [sent] = await Promise.all([
+      sendEmail(snapshot, subject),
+      fileCopy(snapshot, subject),
+    ]);
 
-    if (saved) {
+    if (sent) {
       setPhase("sent");
-      setNote(
-        "Got it — your message is with me. Your email client is opening with a copy, so you can send that too or simply close it."
-      );
+      setNote("Message sent — it's in my inbox. I'll come back to you shortly.");
       setValues(EMPTY);
-    } else {
-      setPhase("partial");
-      setNote(
-        "Your email client is opening with your message ready to go — press send there and it comes straight to me."
-      );
+      return;
     }
 
+    setPhase("partial");
+    setNote(
+      "That didn't go through. Your email client is opening with the message ready — press send there and it reaches me."
+    );
     // let the status render before the browser hands over to the mail client
-    window.setTimeout(() => openMailClient(snapshot, subject), 600);
+    window.setTimeout(() => openMailClient(snapshot, subject), 800);
   }
 
   return (
@@ -224,7 +242,7 @@ export default function ContactForm() {
           )}
         </Button>
         <span className="font-mono text-[0.6rem] uppercase tracking-[0.1em] text-ink-4">
-          Opens your email client with a copy
+          Goes straight to my inbox
         </span>
       </div>
 

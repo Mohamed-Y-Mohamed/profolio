@@ -1,0 +1,100 @@
+<!--
+  Mailjet template — portfolio contact notification.
+
+  HOW TO USE
+  1. Mailjet > Transactional > My Templates > Create a new template
+  2. Choose "Code your own" > HTML
+  3. Delete everything in the editor and paste this whole file in
+  4. Save, then copy the Template ID from the URL or the template list
+  5. Put that number in MAILJET_TEMPLATE_ID
+
+  Variables sent by /api/contact — the names must match exactly:
+    name          sender's full name
+    first_name    sender's first name (used on the reply button)
+    email         sender's email address
+    subject       subject line
+    message       the message body, already escaped, newlines intact
+    received_at   e.g. "Wed 26 Aug 2026, 14:32" (London time)
+
+  No images and no web fonts, so nothing to load and nothing to block.
+-->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0d0d0f" style="background-color:#0d0d0f;margin:0;padding:32px 12px;">
+  <tr>
+    <td align="center">
+
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#141416" style="width:600px;max-width:100%;background-color:#141416;border:1px solid #26262a;">
+
+        <!-- header -->
+        <tr>
+          <td style="padding:30px 34px 0;">
+            <p style="margin:0 0 22px;font-family:Consolas,'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#e8b64c;">
+              New message &middot; Portfolio
+            </p>
+            <p style="margin:0 0 6px;font-family:Georgia,'Times New Roman',serif;font-size:30px;line-height:1.2;color:#eceae6;">
+              {{var:name}}
+            </p>
+            <p style="margin:0 0 28px;font-family:Consolas,'Courier New',monospace;font-size:15px;">
+              <a href="mailto:{{var:email}}" style="color:#e8b64c;text-decoration:none;">{{var:email}}</a>
+            </p>
+          </td>
+        </tr>
+
+        <!-- subject -->
+        <tr>
+          <td style="padding:0 34px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr><td height="1" bgcolor="#26262a" style="height:1px;line-height:1px;font-size:0;">&nbsp;</td></tr>
+            </table>
+            <p style="margin:20px 0 7px;font-family:Consolas,'Courier New',monospace;font-size:10px;letter-spacing:1.6px;text-transform:uppercase;color:#8b8985;">
+              Subject
+            </p>
+            <p style="margin:0 0 20px;font-family:-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;font-size:16px;line-height:1.45;color:#eceae6;">
+              {{var:subject}}
+            </p>
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr><td height="1" bgcolor="#26262a" style="height:1px;line-height:1px;font-size:0;">&nbsp;</td></tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- message -->
+        <tr>
+          <td style="padding:22px 34px 4px;">
+            <p style="margin:0 0 12px;font-family:Consolas,'Courier New',monospace;font-size:10px;letter-spacing:1.6px;text-transform:uppercase;color:#8b8985;">
+              Message
+            </p>
+            <!-- <pre> keeps the line breaks without needing any HTML in the variable -->
+            <pre style="margin:0;font-family:-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;font-size:16px;line-height:1.7;color:#d6d3ce;white-space:pre-wrap;word-wrap:break-word;">{{var:message}}</pre>
+          </td>
+        </tr>
+
+        <!-- reply -->
+        <tr>
+          <td style="padding:30px 34px 34px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td bgcolor="#e8b64c" style="background-color:#e8b64c;padding:14px 26px;">
+                  <a href="mailto:{{var:email}}?subject=Re:%20{{var:subject}}"
+                     style="font-family:Consolas,'Courier New',monospace;font-size:12px;letter-spacing:1.6px;text-transform:uppercase;font-weight:bold;color:#141416;text-decoration:none;">
+                    Reply to {{var:first_name}}
+                  </a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- footer -->
+        <tr>
+          <td bgcolor="#0f0f11" style="background-color:#0f0f11;border-top:1px solid #26262a;padding:16px 34px;">
+            <p style="margin:0;font-family:Consolas,'Courier New',monospace;font-size:11px;line-height:1.6;color:#75736f;">
+              {{var:received_at}} &middot; sent from your portfolio contact form
+            </p>
+          </td>
+        </tr>
+
+      </table>
+
+    </td>
+  </tr>
+</table>
