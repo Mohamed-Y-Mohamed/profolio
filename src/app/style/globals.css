@@ -182,3 +182,126 @@ body {
     opacity: 1;
   }
 }
+
+/* ---------- opening curtain ----------
+   Only visible while html.is-loading, which the inline head script sets before
+   first paint and always clears. Hidden entirely for no-JS and reduced motion.
+   ---------------------------------------------------------------- */
+html.is-loading,
+html.is-loading body {
+  overflow: hidden;
+}
+
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  background: var(--color-bg);
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+html.is-loading .loader {
+  visibility: visible;
+  opacity: 1;
+}
+html.is-loaded .loader {
+  visibility: visible;
+  opacity: 1;
+  animation: curtain-up 0.85s var(--ease-out-expo) forwards;
+}
+
+.loader-mark {
+  display: grid;
+  justify-items: center;
+  gap: clamp(0.9rem, 2.4vw, 1.3rem);
+}
+.loader-initials {
+  font-family: var(--font-display);
+  font-size: clamp(2.3rem, 7vw, 3.5rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  color: var(--color-ink);
+}
+/* The rule drawing across is the progress indicator — an honest one, rather
+   than a percentage the page cannot actually measure. */
+.loader-rule {
+  display: block;
+  height: 1px;
+  width: clamp(116px, 20vw, 178px);
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+html.is-loading .loader-rule {
+  animation: draw 1.15s var(--ease-out-expo) forwards;
+}
+html.is-loaded .loader-mark {
+  animation: fade-out 0.28s ease forwards;
+}
+
+@keyframes draw {
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes curtain-up {
+  to {
+    transform: translateY(-101%);
+    visibility: hidden;
+  }
+}
+
+/* Hold the hero sequence until the curtain lifts, so it is not spent behind it. */
+html.is-loading .anim-rise > span,
+html.is-loading .anim-fade-up {
+  animation-play-state: paused;
+}
+
+/* ---------- staggered reveal ----------
+   Children of .stagger arrive in sequence once their Reveal fires. Used only
+   where the order means something — the numbered project cards. The stack grid
+   is deliberately excluded: it is one object held together by hairline rules,
+   and moving its cells independently would break them.
+   ---------------------------------------------------------------- */
+.stagger > * {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s var(--ease-out-expo),
+    transform 0.7s var(--ease-out-expo);
+}
+[data-shown="true"] .stagger > * {
+  opacity: 1;
+  transform: none;
+}
+.stagger > *:nth-child(1) {
+  transition-delay: 0.05s;
+}
+.stagger > *:nth-child(2) {
+  transition-delay: 0.13s;
+}
+.stagger > *:nth-child(3) {
+  transition-delay: 0.21s;
+}
+.stagger > *:nth-child(4) {
+  transition-delay: 0.29s;
+}
+.stagger > *:nth-child(n + 5) {
+  transition-delay: 0.37s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stagger > * {
+    opacity: 1;
+    transform: none;
+  }
+}
